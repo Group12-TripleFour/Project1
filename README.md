@@ -39,4 +39,8 @@ $ npm run build
 All files are available on OneDrive folder: https://utoronto-my.sharepoint.com/:f:/g/personal/zetong_zhao_mail_utoronto_ca/Eu2ed0mwaixLhiwrVgvLiuIB17Gk6DmVxUcuY-xIHiekLA?e=wqY8ZF
 
 ## Project Issue Tracking
+Tacking issues including TODO tasks and bugs
 https://github.com/Group12-TripleFour/Project1/issues
+
+## Reference 
+https://github.com/ECE444-2022Fall/Assignment_1_starter_template
