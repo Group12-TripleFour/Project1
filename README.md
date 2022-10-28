@@ -1,4 +1,5 @@
-# Project1
+![image](https://user-images.githubusercontent.com/53381276/198642338-e62dab8e-ca87-4236-ae97-34c78ab253fb.png)
+
 
 ## Project description and purpose
 The objective of this system is to create a course selection system that enables productivity for all users. This will be achieved by ensuring that the system is easier to use for users of the system. The primary benefit of the system is to provide comprehensive and accurate information for users. 
