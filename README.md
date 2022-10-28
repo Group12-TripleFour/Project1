@@ -6,7 +6,7 @@ The objective of this system is to create a course selection system that enables
 ## Required package
 * [Git](https://git-scm.com/downloads)
 * [Python](https://www.python.org/downloads/) (python-3.10.6)
-* nodejs
+* [PythonFlask](https://flask.palletsprojects.com/en/2.0.x/)
 To install nodejs, go to [nodejs download]( https://nodejs.org/en/download/). Add `npm` to `PATH` as global variable.
 
 ## Install and Build
@@ -14,26 +14,29 @@ To install nodejs, go to [nodejs download]( https://nodejs.org/en/download/). Ad
 ### 1. Install from github
 `git clone https://github.com/Group12-TripleFour/Project1.git`
 
-### 2. To run the app in development
+### 2. Create a Python virtual environment and activate it
 
-First, go to the `frontend` directory 
 ```sh
-$ cd .\Education_Pathways\frontend\
-```
-
-to install the nodejs modules needed, run
-```sh
-$ npm install
-```
-then to start the app in development mode
-```sh
-$ npm start
-```
-### 3. To build the app for production to the `build` folder. Under the same `frontend` directory, run
-```sh
-$ npm run build
+python -m venv ./venv
+source ./venv/bin/activate
 ```
 
+### 3. Run Flask app in development mode
+On Windows OS, first set the following environment variables
+```sh
+set FLASK_APP=run.py
+set FLASK_ENV=development
+```
+On MacOS, set the environment variables using
+```sh
+export FLASK_APP=run.py
+export FLASK_ENV=development
+```
+Then run the application
+```sh
+flask run
+```
+### 4. Visit "localhost:5000" on your favourite web browser.
 
 ## Project Documentation
 All files are available on OneDrive folder: https://utoronto-my.sharepoint.com/:f:/g/personal/zetong_zhao_mail_utoronto_ca/Eu2ed0mwaixLhiwrVgvLiuIB17Gk6DmVxUcuY-xIHiekLA?e=wqY8ZF
