@@ -26,6 +26,37 @@ class Course(db.Document):
         return cls.objects(code=code_).get().graph
 
 
+class CourseSearchForm(Form):
+    df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
+    divisions = [('Any','Any')] + sorted([
+        (t,t) for t in set(df.Division.values)
+    ])
+
+    departments = [('Any','Any')] + sorted([
+        (t,t) for t in set(df.Department.values)
+    ])
+
+    campus = [('Any','Any')] + sorted([
+        (t,t) for t in set(df.Campus.values)
+    ])
+
+    year_choices = [
+        (t,t) for t in set(df['Course Level'].values)
+    ]
+            
+    top = [
+        ('10','10'),
+        ('25','25'),
+        ('50','50')
+    ]
+    select = SelectField('Course Year:', choices=year_choices)
+    top = SelectField('',choices=top)
+    divisions = SelectField('Division:', choices=divisions)
+    departments = SelectField('Department:', choices=departments)
+    campuses = SelectField('Campus:', choices=campus)
+
+
+
 
 class Wishlist(db.Document):
     username = db.StringField(required=True, unique=True)
