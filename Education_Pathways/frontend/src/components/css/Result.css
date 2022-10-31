@@ -25,11 +25,25 @@
 .submit-button {
   background-color: #1c3e6e;
   color: white;
-  border: none;
+
+  border-color: #1c3e6e;
+  border-style: solid;
+  border-width: 1px;
   border-radius: 15px;
-  border: none;
+
   height: 3em;
   width: 7em;
+}
+
+.submit-button:hover {
+  background-color: white;
+  
+  border-color: #1c3e6e;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 15px;
+  
+  color: #1c3e6f;
 }
 
 .text-input {
