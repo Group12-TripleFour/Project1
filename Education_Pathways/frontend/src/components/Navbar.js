@@ -10,6 +10,8 @@ import CourseDescriptionPage from "./CourseDescription";
 // import SignUp from './SignUp'
 import SearchResultDisplay from './ResultDisplay'
 
+import Form from "./Form";
+
 function CourseDescription (props) {
   let query = useQuery();
   return <CourseDescriptionPage code={query.get("code")} />;
@@ -24,24 +26,24 @@ function useQuery() {
 
 export default class NavbarComp extends Component {
 
-  constructor(props){
-    super(props)
-    this.state = {
-      username: localStorage.getItem('username'),
-      login: false
-    }
-  }
+  // constructor(props){
+  //   super(props)
+  //   this.state = {
+  //     username: localStorage.getItem('username'),
+  //     login: false
+  //   }
+  // }
 
-  componentDidMount() {
-    if (localStorage.getItem('username') !== "") {
-      this.setState({username: localStorage.getItem('username')})
-    }
-  }
+  // componentDidMount() {
+  //   if (localStorage.getItem('username') !== "") {
+  //     this.setState({username: localStorage.getItem('username')})
+  //   }
+  // }
 
-  logOut = () => {
-    localStorage.setItem('username', "");
-    this.setState({username: ""})
-  }
+  // logOut = () => {
+  //   localStorage.setItem('username', "");
+  //   this.setState({username: ""})
+  // }
 
   render() {
     return (
@@ -62,12 +64,14 @@ export default class NavbarComp extends Component {
                   About Us
                 </Nav.Link>
 
-                {/* <Nav.Link href="/search" style={{ color: "white", display: "inline" }}>
-                  Search
-                </Nav.Link> */}
+                <Nav.Link as={Link} to="/filter">
+                  Filter
+                </Nav.Link>
 
-                
-
+                <Nav.Link as={Link} to="/review">
+                  Review
+                </Nav.Link>
+               
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -94,9 +98,18 @@ We are looking for feedback to improve Education Pathways and make it more usefu
       </div>
               {/* <SearchResultDisplay /> */}
             </Route>
-            <Route path="/search">
-              <SearchResultDisplay />
+
+            <Route path="/filter">
+              <div style={{ marginTop: "10%" }}>
+              <h2> Filter for courses </h2>
+              <Form />
+              </div>
             </Route>
+
+            <Route path="/review">
+
+            </Route>
+            
             <Route exact
               path="/courseDetails/:code"
               render={props =>(<CourseDescriptionPage {...props} />)}>
