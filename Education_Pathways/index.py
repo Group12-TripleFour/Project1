@@ -4,7 +4,7 @@ from flask import Flask, send_from_directory
 from flask_restful import Api
 import os
 
-import config
+from . import config
 
 app = Flask(__name__, static_folder='frontend/build')
 app.config['ENV'] = 'development'
@@ -19,7 +19,7 @@ config.init_db(app)
 config.init_cors(app)
 
 # API Endpoints
-import controller
+from . import controller
 api = Api(app)
 api.add_resource(controller.UserRegistration, '/user/register')
 api.add_resource(controller.UserLogin, '/user/login')
