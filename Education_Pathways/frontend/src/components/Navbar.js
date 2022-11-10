@@ -9,8 +9,25 @@ import CourseDescriptionPage from "./CourseDescription";
 // import Wishlist from './Wishlist';
 // import SignUp from './SignUp'
 import SearchResultDisplay from './ResultDisplay'
-
 import Form from "./Form";
+import FeedbackList from './feedbacks/FeedbackList';
+import NewFeedbackForm from './feedbacks/NewFeedbackForm';
+import Comparison from './Comparison'
+
+const DUMMY_DATA = [
+  {
+    coursename: 'ABC100',
+    workload: 'H',
+    complexity: 'H',
+    usefulness: 'H',
+  },
+  {
+    coursename: 'BCA200',
+    workload: 'L',
+    complexity:'L',
+    usefulness: 'L',
+  },
+];
 
 function CourseDescription (props) {
   let query = useQuery();
@@ -23,6 +40,9 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
+function addFeedbackHandler(feedback){
+  console.log(feedback);
+}
 
 export default class NavbarComp extends Component {
 
@@ -71,7 +91,11 @@ export default class NavbarComp extends Component {
                 <Nav.Link as={Link} to="/review">
                   Review
                 </Nav.Link>
-               
+
+                <Nav.Link as={Link} to="/comparison">
+                  Comparsion
+                </Nav.Link>
+
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -107,7 +131,14 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             </Route>
 
             <Route path="/review">
-
+              <div style={{ marginTop: "3%" }}>           <section>
+              <h3> Submit Review Feedback</h3>
+                <NewFeedbackForm onAddFeedback={addFeedbackHandler}/>
+              </section>
+              <section>
+                <FeedbackList feedbacks={DUMMY_DATA} />
+              </section>
+              </div> 
             </Route>
             
             <Route exact
@@ -117,6 +148,12 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             <Route path="/">
               <SearchResultDisplay />
             </Route>
+
+            <Route path="/comparison">
+              <Comparison/>
+
+            </Route>
+            
 
           </Switch>
         </div>
