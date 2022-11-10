@@ -1,6 +1,8 @@
 # This is the model
 
-from config import app, db
+from .config import app, db
+from wtforms import Form, StringField, SelectField
+import pandas as pd
 
 class Course(db.Document):
     code = db.StringField(required=True, unique=True)

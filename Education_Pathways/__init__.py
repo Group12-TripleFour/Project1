@@ -8,7 +8,7 @@ from scipy.sparse import load_npz
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, render_template, request, redirect
 from wtforms import Form, StringField, SelectField
-import model
+#from model import *
 
 def create_app():
 	app=Flask(__name__, instance_relative_config=True)
@@ -110,15 +110,16 @@ def filter_courses(year, division, department, campus, n_return=10):
 
 
 
-with open('resources/course_vectorizer.pickle','rb') as f:
-	vectorizer = pickle.load(f)
-with open('resources/course_vectors.npz','rb') as f:
-	course_vectors = pickle.load(f)
-with open('resources/graph.pickle','rb') as f:
-	G = nx.read_gpickle(f)
+#with open('resources/course_vectorizer.pickle','rb') as f:
+#	vectorizer = pickle.load(f)
+#with open('resources/course_vectors.npz','rb') as f:
+#	course_vectors = pickle.load(f)
+
+#with open('resources/graph.pickle','rb') as f:
+#	G = nx.read_gpickle(f)
 
 
 df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
-app = create_app()
-if __name__ == '__main__':
-	app.run(host='0.0.0.0')
+#app = create_app()
+#if __name__ == '__main__':
+#	app.run(host='0.0.0.0')
