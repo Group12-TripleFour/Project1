@@ -1,6 +1,6 @@
 # this is the flask core
 
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory,render_template,request,redirect
 from flask_restful import Api
 import os
 
@@ -21,17 +21,20 @@ config.init_cors(app)
 # API Endpoints
 from . import controller
 api = Api(app)
-api.add_resource(controller.UserRegistration, '/user/register')
-api.add_resource(controller.UserLogin, '/user/login')
+#api.add_resource(controller.UserRegistration, '/user/register')
+#api.add_resource(controller.UserLogin, '/user/login')
 
 api.add_resource(controller.SearchCourse, '/searchc')
 api.add_resource(controller.ShowCourse, '/course/details')
 api.add_resource(controller.ShowCourseGraph, '/course/graph')
 
-api.add_resource(controller.UserWishlist, '/user/wishlist')
-api.add_resource(controller.UserWishlistAdd, '/user/wishlist/addCourse')
-api.add_resource(controller.UserWishlistRemove, '/user/wishlist/removeCourse')
-api.add_resource(controller.UserWishlistMinorCheck, '/user/wishlist/minorCheck')
+api.add_resource(controller.UserWishlist, '/wishlist')
+api.add_resource(controller.UserWishlistAdd, '/wishlist/addCourse')
+api.add_resource(controller.UserWishlistRemove, '/wishlist/removeCourse')
+api.add_resource(controller.UserWishlistMinorCheck, '/wishlist/minorCheck')
+
+#api.add_resource(controller.FilterCourse, '/filter')
+from . import model
 
 @app.route("/", defaults={'path': ''})
 @app.route('/<path:path>')
@@ -40,6 +43,17 @@ def serve(path):
         return send_from_directory(app.static_folder, path)
     else:
         return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/filter',methods=['GET','POST'])
+def filter_page():
+    search = model.CourseSearchForm(request.form)
+    print("filter")
+    if request.method=='POST':
+        print("post")
+        return controller.filter_courses(search)
+     # add filter.html !!!!!
+    #return render_template("frontend/build/filter_result.html",form=search)
+    return send_from_directory(app.static_folder, 'filter_result.html')
 
 
 if __name__ == '__main__':
