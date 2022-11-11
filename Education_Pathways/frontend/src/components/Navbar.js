@@ -93,7 +93,7 @@ export default class NavbarComp extends Component {
                 </Nav.Link>
 
                 <Nav.Link as={Link} to="/comparison">
-                  Comparsion
+                  Comparison
                 </Nav.Link>
 
               </Nav>
@@ -140,19 +140,23 @@ We are looking for feedback to improve Education Pathways and make it more usefu
               </section>
               </div> 
             </Route>
-            
+
+            <Route path="/comparison">
+              <Comparison/>
+            </Route>
+
             <Route exact
               path="/courseDetails/:code"
               render={props =>(<CourseDescriptionPage {...props} />)}>
             </Route>
             <Route path="/">
               <SearchResultDisplay />
+              <section>
+                <FeedbackList feedbacks={DUMMY_DATA} />
+              </section>
             </Route>
 
-            <Route path="/comparison">
-              <Comparison/>
-
-            </Route>
+            
             
 
           </Switch>

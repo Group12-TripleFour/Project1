@@ -1,7 +1,25 @@
+import { useContext } from 'react';
+
 import classes from './FeedbackItem.module.css';
 import Card from './Card'
+import FavoritesContext from '../favorites-context';
 
 function FeedbackItem(props) {
+  const favouritesCtx = useContext(FavoritesContext);
+  const itemIsFavourite = favouritesCtx.itemIsFavorite(props.coursename);
+  
+  function toggleFavoriteStatusHandler(){
+    if (itemIsFavourite){
+      favouritesCtx.removeFavorite(props.coursename);
+    }else{
+      favouritesCtx.addFavorite({
+        coursename:props.coursename,
+        workload:props.workload,
+        complexity:props.complexity,
+        usefulness:props.usefulness
+      });
+    }
+  }
 
   return (
     <li className={classes.item}>
@@ -17,9 +35,8 @@ function FeedbackItem(props) {
             <p>{props.usefulness}</p>
         </div>
         <div className={classes.actions}>
-          <button /*onClick={toggleFavoriteStatusHandler}*/>
-            {/*itemIsFavorite ? 'Remove from Favorites' : 'To Favorites'*/}
-            add to favorite
+          <button onClick={toggleFavoriteStatusHandler}>
+            {itemIsFavourite ? 'Remove' : 'Add'}
           </button>
         </div>
       </Card>
