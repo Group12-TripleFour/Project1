@@ -8,21 +8,33 @@ import { BrowserRouter as Router, Route, Switch, Link, useLocation } from "react
 import CourseDescriptionPage from "./CourseDescription";
 // import Wishlist from './Wishlist';
 // import SignUp from './SignUp'
-import SearchResultDisplay from './ResultDisplay'
+import SearchResultDisplay, { global_array } from './ResultDisplay'
 import Form from "./Form";
 import FeedbackList from './feedbacks/FeedbackList';
-import NewFeedbackForm from './feedbacks/NewFeedbackForm';
-import Comparison from './Comparison'
 
+import Comparison from './Comparison'
+import { useContext } from 'react';
+import FavoritesContext from './favorites-context'
+import classes from './Navbar.module.css'
+import FeedbackSubmitPage from './FeedbackSubmitPage';
+
+
+const a = global_array;
 const DUMMY_DATA = [
   {
-    coursename: 'ABC100',
+    coursename: 'ABC',
     workload: 'H',
     complexity: 'H',
     usefulness: 'H',
   },
   {
     coursename: 'BCA200',
+    workload: 'L',
+    complexity:'L',
+    usefulness: 'L',
+  },
+  {
+    coursename: 'QWE200',
     workload: 'L',
     complexity:'L',
     usefulness: 'L',
@@ -40,11 +52,17 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-function addFeedbackHandler(feedback){
-  console.log(feedback);
+function Count(){
+  const favoritesCtx = useContext(FavoritesContext);
+  console.log(favoritesCtx.totalFavorites);
+  return (
+    <span className={classes.badge}>{favoritesCtx.totalFavorites}</span> 
+  );
 }
 
+
 export default class NavbarComp extends Component {
+  
 
   // constructor(props){
   //   super(props)
@@ -84,9 +102,10 @@ export default class NavbarComp extends Component {
                   About Us
                 </Nav.Link>
 
-                <Nav.Link as={Link} to="/filter">
+                {/* <Nav.Link as={Link} to="/filter">
                   Filter
-                </Nav.Link>
+                </Nav.Link> */}
+                <a href= "./filter.html"> filter </a>
 
                 <Nav.Link as={Link} to="/review">
                   Review
@@ -94,7 +113,9 @@ export default class NavbarComp extends Component {
 
                 <Nav.Link as={Link} to="/comparison">
                   Comparison
+                  <span className='badge'><Count/></span>
                 </Nav.Link>
+                
 
               </Nav>
             </Navbar.Collapse>
@@ -123,28 +144,30 @@ We are looking for feedback to improve Education Pathways and make it more usefu
               {/* <SearchResultDisplay /> */}
             </Route>
 
-            <Route path="/filter">
+            {/* <Route path="/filter">
               <div style={{ marginTop: "10%" }}>
               <h2> Filter for courses </h2>
               <Form />
               </div>
-            </Route>
+            </Route> */}
 
             <Route path="/review">
-              <div style={{ marginTop: "3%" }}>           <section>
-              <h3> Submit Review Feedback</h3>
-                <NewFeedbackForm onAddFeedback={addFeedbackHandler}/>
-              </section>
+            <div>
+              <FeedbackSubmitPage/>
               <section>
                 <FeedbackList feedbacks={DUMMY_DATA} />
               </section>
-              </div> 
+            </div>
             </Route>
 
             <Route path="/comparison">
               <Comparison/>
             </Route>
 
+            <Route path="/test">
+             
+            </Route>
+            
             <Route exact
               path="/courseDetails/:code"
               render={props =>(<CourseDescriptionPage {...props} />)}>
@@ -152,7 +175,7 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             <Route path="/">
               <SearchResultDisplay />
               <section>
-                <FeedbackList feedbacks={DUMMY_DATA} />
+                <FeedbackList feedbacks={DUMMY_DATA}/>
               </section>
             </Route>
 
