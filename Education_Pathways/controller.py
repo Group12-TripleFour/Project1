@@ -1,14 +1,14 @@
 # this is the controller
 
-from flask import jsonify, request
+from flask import jsonify, request, redirect, render_template
 from flask_restful import Resource, reqparse
 # from flask_cors import cross_origin
 from .config import app
 from .model import *
 from fuzzy import nysiis
 import re
-
-
+import numpy as np
+df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
 
 # -------------------- Course related --------------------
 class FilterCourse(Resource):
@@ -148,21 +148,21 @@ class ShowCourseGraph(Resource):
             return resp
 
 # ------------------------------------------------------------
+@app.route('/filter/results/')
 def filter_courses(search):
 	if search.data['search'] == '' or not search.data['search']:
-		return redirect('/')
-	results = filter_courses(
+		return redirect('/filter')
+	results = filter_results(
 		search.data['search'],
 		search.data['select'],
 		search.data['divisions'],
 		search.data['departments'],
-		search.data['campuses'],
-		search.data['top']
+		search.data['campuses']
 		)
 	#return send_from_directory(app.static_folder, 'filter_result.html')
 
 	return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
-def filter_results(year, division, department, campus, n_return=10):
+def filter_results(search, year, division, department, campus, n_return=10):
         n_return=int(n_return)
         year=int(year)
         pos_vals = np.zeros((len(df),))

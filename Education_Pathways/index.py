@@ -52,8 +52,8 @@ def filter_page():
         print("post")
         return controller.filter_courses(search)
      # add filter.html !!!!!
-    #return render_template("frontend/build/filter_result.html",form=search)
-    return send_from_directory(app.static_folder, 'filter_result.html')
+    return render_template("filter.html",form=search)
+    #return send_from_directory(app.static_folder, 'filter_result.html')
 
 
 if __name__ == '__main__':
