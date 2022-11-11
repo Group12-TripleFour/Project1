@@ -6,7 +6,7 @@ import os
 
 from . import config
 
-app = Flask(__name__, static_folder='frontend/build')
+app = Flask(__name__, static_folder='frontend/build')#, instance_relative_config=True)
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
 app.config['TESTING'] = True
@@ -52,7 +52,7 @@ def filter_page():
         print("post")
         return controller.filter_courses(search)
      # add filter.html !!!!!
-    return render_template("filter.html",form=search)
+    return render_template('filter.html',form=search)
     #return send_from_directory(app.static_folder, 'filter_result.html')
 
 

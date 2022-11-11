@@ -148,7 +148,7 @@ class ShowCourseGraph(Resource):
             return resp
 
 # ------------------------------------------------------------
-@app.route('/filter/results/')
+@app.route('/filter/results')
 def filter_courses(search):
 	if search.data['search'] == '' or not search.data['search']:
 		return redirect('/filter')
