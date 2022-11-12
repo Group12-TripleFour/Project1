@@ -8,8 +8,16 @@ from .model import *
 from . import minor
 from fuzzy import nysiis
 import re
+import pickle
+import networkx as nx
 import numpy as np
 from collections import defaultdict
+with open('resources/course_vectorizer.pickle','rb') as f:
+    vectorizer = pickle.load(f)
+with open('resources/course_vectors.npz','rb') as f:
+    course_vectors = pickle.load(f)
+with open('resources/graph.pickle','rb') as f:
+    G = nx.read_gpickle(f)
 df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
 
 # -------------------- Course related --------------------
@@ -172,7 +180,7 @@ def filter_results(search, year, division, department, campus, minor_search, n_r
         pos_vals = np.zeros((len(df),))
         idxs = [t[1] for t in sorted(list(zip(list(pos_vals),list(df.index))),key=lambda x:x[0],reverse=True)]
         tf = df.loc[idxs]
-        print("type is:",type(tf))
+        print("type is:",tf)
         requisite_vals = defaultdict(list)
         if minor_search != 'Any':
                 course_names=minor.engineering_minor_list[minor_search]
@@ -182,8 +190,10 @@ def filter_results(search, year, division, department, campus, minor_search, n_r
                 print("tf_return",tf_return)
                 tables = [tf_return[['Course','Name','Division','Course Description','Department','Course Level']]]
                 return tables
-        if year!='Any':
+        if year!=0:
                 main_table = tf[tf['Course Level'] == year]
+        else:
+                main_table = tf[tf['Course Level'] == 1]
         for name,filter in [('Division',division), ('Department',department), ('Campus',campus)]:
                 if filter != 'Any':
                         #if name=='Minor':
@@ -194,7 +204,7 @@ def filter_results(search, year, division, department, campus, minor_search, n_r
                         print("name=",name)
                         main_table = main_table[main_table[name] == filter]
         tables = [main_table[0:n_return][['Course','Name','Division','Course Description','Department','Course Level']]]
-        if year!='Any':
+        if year!=0:
                 year-=1
                 while (year>0):
                         tf = df.loc[[t[0] for t in sorted(requisite_vals.items(),key=lambda x: x[1],reverse=True)]]
@@ -203,9 +213,56 @@ def filter_results(search, year, division, department, campus, minor_search, n_r
                                 if filter != 'Any':
                                         tf = tf[tf[name] == filter]
                         tables.append(tf[0:n_return][['Course','Name','Division','Course Description','Department','Course Level']])
+                        tables.pop()
                         year-=1
         return tables
+@app.route('/course/<code>')
+def course(code):
 
+    #If the course code is not present in the dataset, progressively remove the last character until we get a match.
+    #For example, if there is no CSC413 then we find the first match that is CSC41.
+    #If there are no matches for any character, just go home.
+    if code not in df.index:
+        while True:
+            code = code[:-1]
+            if len(code) == 0:
+                return redirect('/')
+            t = df[df.index.str.contains(code)]
+            if len(t) > 0:
+                code = t.index[0]
+                return redirect('/course/' + code)
+
+
+    course = df.loc[code]
+    #use course network graph to identify pre and post requisites
+    pre = G.in_edges(code)
+    post = G.out_edges(code)
+    excl = course['Exclusion']
+    coreq = course['Corequisite']
+    aiprereq = course['AIPreReqs']
+    majors = course['MajorsOutcomes']
+    minors = course['MinorsOutcomes']
+    faseavailable = course['FASEAvailable']
+    mayberestricted = course['MaybeRestricted']
+    terms = course['Term']
+    activities = course['Activity']
+    course = {k:v for k,v in course.items() if k not in ['Course','Course Level Number','FASEAvailable','MaybeRestricted','URL','Pre-requisites','Exclusion','Corequisite','Recommended Preparation','AIPreReqs','MajorsOutcomes','MinorsOutcomes','Term','Activity'] and v==v}
+    return render_template(
+            'course.html',
+            course=course,
+            pre=pre, 
+            post=post,
+            excl=excl,
+            coreq=coreq,
+            aip=aiprereq,
+            majors=majors,
+            minors=minors,
+            faseavailable=faseavailable,
+            mayberestricted=mayberestricted,
+            terms=terms,
+            activities=activities,
+            zip=zip
+            )
 # -------------------- Wishlist related --------------------
 class UserWishlist(Resource):
     def get(self):

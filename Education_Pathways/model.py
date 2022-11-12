@@ -52,7 +52,17 @@ class CourseSearchForm(Form):
         ('25','25'),
         ('50','50')
     ]
-    minors = [('Any','Any'), ('AI minor','none'), ('Bioengineering Minor','Bioengineering Minor')]
+    minors = [('Any','Any'), 
+	('Artificial Intelligence Minor','Artificial Intelligence Minor'),
+	('Advanced Manufacturing Minor','Advanced Manufacturing Minor'),
+	('Bioengineering Minor','Bioengineering Minor'),
+	('Environmental Engineering Minor','Environmental Engineering Minor'),
+	('Sustainable Energy Minor','Sustainable Energy Minor'),
+	('Engineering Business Minor','Engineering Business Minor'),
+	('Robotics and Mechatronics Minor','Robotics and Mechatronics Minor'), 
+	('Biomedical Engineering Minor','Biomedical Engineering Minor'),
+	('Nanoengineering Minor','Nanoengineering Minor'),
+	('Music Performance Minor','Music Performance Minor')]
 
     select = SelectField('Course Year:', choices=year_choices)
     top = SelectField('',choices=top)

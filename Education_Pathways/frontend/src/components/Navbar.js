@@ -12,7 +12,7 @@ import SearchResultDisplay from './ResultDisplay'
 import Form from "./Form";
 import FeedbackList from './feedbacks/FeedbackList';
 import NewFeedbackForm from './feedbacks/NewFeedbackForm';
-import Comparison from './Comparison'
+// import Comparison from './Comparison'
 
 const DUMMY_DATA = [
   {
@@ -84,9 +84,10 @@ export default class NavbarComp extends Component {
                   About Us
                 </Nav.Link>
 
-                <Nav.Link as={Link} to="/filter">
+                {/*<Nav.Link as={Link} to="/filter">
                   Filter
-                </Nav.Link>
+                </Nav.Link>*/}
+		<a href="/filter"> Filter </a>
 
                 <Nav.Link as={Link} to="/review">
                   Review
@@ -123,12 +124,12 @@ We are looking for feedback to improve Education Pathways and make it more usefu
               {/* <SearchResultDisplay /> */}
             </Route>
 
-            <Route path="/filter">
+            {/*<Route path="/filter">
               <div style={{ marginTop: "10%" }}>
               <h2> Filter for courses </h2>
               <Form />
               </div>
-            </Route>
+            </Route>*/}
 
             <Route path="/review">
               <div style={{ marginTop: "3%" }}>           <section>
@@ -148,12 +149,6 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             <Route path="/">
               <SearchResultDisplay />
             </Route>
-
-            <Route path="/comparison">
-              <Comparison/>
-
-            </Route>
-            
 
           </Switch>
         </div>

@@ -1,83 +1,13 @@
 <!DOCTYPE html>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 <html lang="en">
-<link rel="stylesheet" type="text/css" href="../static/styles/results.css">
-<link rel="stylesheet" type="text/css" href="../static/styles/common.css">
-<style type="text/css">
-body {
-	font-family: Verdana;
-	padding: 40px;
-	background-color: #C7F3FF;
-}
-h1, h3 {
-	color: #00204E;
-}
-
-.common-page-heading-container {
-	text-align: center;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.common-page-form select, input {
-	background-color: beige;
-	border-radius: 5px;
-	border-color: transparent;
-}
-
-.common-page-form-field {
-	margin: 2px auto;
-}
-
-.common-page-form {
-	border-width: 2px;
-	border-style: solid;
-	border-color: #00204E;
-	border-radius: 20px;
-	padding: 20px;
-	margin: 20px auto;
-}
-
-.common-page-sumbit-btn {
-	margin-top: 20px;
-}
-#results-page-table-container{
-	margin: 20px auto;
-}
-
-#results-page-table-container table{
-	border-radius: 20px;
-	padding: 20px;
-	border-collapse: separate;
-}
-
-#results-page-table-container td{
-	padding: 3px;
-	border-left: 1px solid #00204E;
-	border-bottom: 1px solid #00204E;
-}
-#results-page-table-container th{
-	text-align: center;
-	position: sticky;
-	top: 2px;
-	z-index: 10;
-	background-color: #00204E;
-	color: white;
-	border-left: 1px solid #00204E;
-	border-bottom: 1px solid #00204E;
-}
-#results-page-table-container table:last-child{
-	border-right: 1px solid #00204E;
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="results.css">
+<link rel="stylesheet" type="text/css" href="common.css">
 <head>
     <meta charset="UTF-8">
     <title>Education Pathways</title>
 </head>
-<a href="https://carte.utoronto.ca/" target="_blank"><img src="/static/CARTE_logo.jpg" class="img-fluid" style="max-width: 25%"></a>
+
 <h1 style="text-align: center">Education Pathways</h1>
 
 <body>
@@ -91,7 +21,11 @@ h1, h3 {
         </p> 
         <p>
         {{ render_field(form.search) }}
-      </p></dl>
+      </p>
+    <p>
+    {{ render_field(form.minor_search) }}
+   </p>
+	</dl>
       <p>{{render_field(form.top)}} <input type="submit" value="Search">
       </p></form>
       <h3> Search Results </h3>

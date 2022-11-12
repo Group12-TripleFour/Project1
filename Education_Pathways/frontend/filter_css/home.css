@@ -1,0 +1,11 @@
+#home-page-introduction{
+	margin:40px 40px;
+	font-family:cursive;
+	position:middle;
+	font-size: 15px;
+}
+#home-page-feedback-text{
+	margin-top: 20px;
+	font-style:italic;
+	color:rgba(53,53,53,0.705);
+}
