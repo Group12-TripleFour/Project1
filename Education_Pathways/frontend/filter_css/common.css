@@ -1,0 +1,54 @@
+.navbar {
+	height: 65px;
+	background: #1c3e6f;
+}
+.navbar-brand {
+	position: relative;
+	vertical-align: middle;
+	font-family: cursive;
+	font-size: 25px;
+}
+.img-fluid {
+	padding-top: 12px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	padding-right: 0px;
+	vertical-align: middle;
+}
+
+.common-page-heading-container {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.common-page-form select, input {
+	background-color: beige;
+	border-radius: 5px;
+	border-color: transparent;
+}
+
+.common-page-form-field {
+	margin: 2px auto;
+	text-align: center;
+	font-family: cursive;
+	font-size: 10px;
+}
+
+.common-page-form {
+	border-width: 2px;
+	border-style: solid;
+	border-color: #00204E;
+	border-radius: 20px;
+	padding: 20px;
+	margin: 20px auto;
+	text-align: center;
+	font-family: cursive;
+	font-size: 20px;
+}
+
+.common-page-sumbit-btn {
+	margin-top: 20px;
+}

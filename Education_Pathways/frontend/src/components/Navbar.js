@@ -11,6 +11,7 @@ import CourseDescriptionPage from "./CourseDescription";
 import SearchResultDisplay, { global_array } from './ResultDisplay'
 import Form from "./Form";
 import FeedbackList from './feedbacks/FeedbackList';
+<<<<<<< 8ac45ebd119024b83d432b75b37b2f057b8b3156
 
 import Comparison from './Comparison'
 import { useContext } from 'react';
@@ -18,6 +19,7 @@ import FavoritesContext from './favorites-context'
 import classes from './Navbar.module.css'
 import FeedbackSubmitPage from './FeedbackSubmitPage';
 
+import NewFeedbackForm from './feedbacks/NewFeedbackForm';
 
 const a = global_array;
 const DUMMY_DATA = [
@@ -101,12 +103,7 @@ export default class NavbarComp extends Component {
                 <Nav.Link className={classes.navpath} as={Link} to="/about">
                   About Us
                 </Nav.Link>
-
-                {/* <Nav.Link as={Link} to="/filter">
-                  Filter
-                </Nav.Link> */}
-                <a className={classes.navpath} href= "./filter.html"> filter </a>
-
+		<a href="/filter"> Filter </a>
                 <Nav.Link className={classes.navpath} as={Link} to="/review">
                   Review
                 </Nav.Link>
@@ -144,12 +141,20 @@ We are looking for feedback to improve Education Pathways and make it more usefu
               {/* <SearchResultDisplay /> */}
             </Route>
 
+<<<<<<< 8ac45ebd119024b83d432b75b37b2f057b8b3156
               <Route path="/filter">
+=======
+            {/*<Route path="/filter">
+>>>>>>> finish filter funcionality, need to adjust format
               <div style={{ marginTop: "10%" }}>
               <h2> Filter for courses </h2>
               <Form />
               </div>
+<<<<<<< 8ac45ebd119024b83d432b75b37b2f057b8b3156
             </Route> 
+=======
+            </Route>*/}
+>>>>>>> finish filter funcionality, need to adjust format
 
             <Route path="/review">
             <div>
@@ -179,9 +184,12 @@ We are looking for feedback to improve Education Pathways and make it more usefu
               </section>
             </Route>
 
+<<<<<<< 8ac45ebd119024b83d432b75b37b2f057b8b3156
             
             
 
+=======
+>>>>>>> finish filter funcionality, need to adjust format
           </Switch>
         </div>
         

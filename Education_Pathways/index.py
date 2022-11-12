@@ -3,7 +3,7 @@
 from flask import Flask, send_from_directory,render_template,request,redirect
 from flask_restful import Api
 import os
-
+from flask_bootstrap import Bootstrap
 from . import config
 
 app = Flask(__name__, static_folder='frontend/build')#, instance_relative_config=True)
@@ -13,7 +13,7 @@ app.config['TESTING'] = True
 # MongoDB URI
 DB_URI = "mongodb+srv://Cansin:cv190499@a-star.roe6s.mongodb.net/A-Star?retryWrites=true&w=majority"
 app.config["MONGODB_HOST"] = DB_URI
-
+bootstrap = Bootstrap(app)
 config.init_app(app)
 config.init_db(app)
 config.init_cors(app)
