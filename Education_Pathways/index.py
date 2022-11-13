@@ -4,7 +4,7 @@ from flask import Flask, send_from_directory,render_template,request,redirect
 from flask_restful import Api
 import os
 from flask_bootstrap import Bootstrap
-from . import config
+import config
 
 app = Flask(__name__, static_folder='frontend/build')#, instance_relative_config=True)
 app.config['ENV'] = 'development'
@@ -19,7 +19,7 @@ config.init_db(app)
 config.init_cors(app)
 
 # API Endpoints
-from . import controller
+import controller
 api = Api(app)
 #api.add_resource(controller.UserRegistration, '/user/register')
 #api.add_resource(controller.UserLogin, '/user/login')
@@ -34,7 +34,7 @@ api.add_resource(controller.UserWishlistRemove, '/wishlist/removeCourse')
 api.add_resource(controller.UserWishlistMinorCheck, '/wishlist/minorCheck')
 
 #api.add_resource(controller.FilterCourse, '/filter')
-from . import model
+import model
 
 @app.route("/", defaults={'path': ''})
 @app.route('/<path:path>')
