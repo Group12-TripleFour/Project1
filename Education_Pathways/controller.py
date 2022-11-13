@@ -3,9 +3,9 @@
 from flask import jsonify, request, redirect, render_template
 from flask_restful import Resource, reqparse
 # from flask_cors import cross_origin
-from .config import app
-from .model import *
-from . import minor
+from config import app
+from model import *
+import minor
 from fuzzy import nysiis
 import re
 import pickle
