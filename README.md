@@ -25,7 +25,7 @@ source ./venv/bin/activate
 ### 3. Run Flask app in development mode
 On Windows OS, first set the following environment variables
 ```sh
-set FLASK_APP=run.py
+set FLASK_APP=index.py
 set FLASK_ENV=development
 ```
 On MacOS, set the environment variables using
