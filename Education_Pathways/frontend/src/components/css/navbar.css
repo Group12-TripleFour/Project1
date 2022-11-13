@@ -3,6 +3,16 @@
   background: #1c3e6f;
 }
 
+.navbar-brand-top {
+        padding-left: 8px;
+	padding-right: 8px;
+        margin-top: 0;
+        letter-spacing: 3px;
+        color: rgba(255,255,255,.75);
+        line-height: 40px;
+        text-decoration: none;
+}
+
 .nav-item a {
   color: white;
   font-weight: bold;

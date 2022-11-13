@@ -87,7 +87,7 @@ export default class NavbarComp extends Component {
                 {/*<Nav.Link as={Link} to="/filter">
                   Filter
                 </Nav.Link>*/}
-		<a href="/filter"> Filter </a>
+		<a class="navbar-brand-top" href="/filter"> Filter </a>
 
                 <Nav.Link as={Link} to="/review">
                   Review
