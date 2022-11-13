@@ -1,12 +1,28 @@
 .navbar {
 	height: 65px;
 	background: #1c3e6f;
+	text-decoration: none;
 }
-.navbar-brand {
-	position: relative;
+.navbar-brand-top1{
+	padding: 10px 20px;
+	margin-right: 16px;
+	padding-top: 15px;
+	font-family: "Fredoka One";
+	font-size: 20px;
+	letter-spacing: 3px;
+	text-decoration: none;
+}
+.navbar-brand-top {
+	padding: 0;
+	margin-top: 12px;
+	text-align: left;
 	vertical-align: middle;
-	font-family: cursive;
-	font-size: 25px;
+	font-family: "Fredoka One";
+	font-size: 16px;
+	letter-spacing: 3px;
+	color: #adb5bd;
+	line-height: 65px;
+	text-decoration: none;
 }
 .img-fluid {
 	padding-top: 12px;
@@ -15,7 +31,12 @@
 	padding-right: 0px;
 	vertical-align: middle;
 }
-
+.main-text {
+	padding: 40px;
+}
+h3 {
+	font-family:'Fredoka One';
+}
 .common-page-heading-container {
 	text-align: center;
 	margin-top: 20px;

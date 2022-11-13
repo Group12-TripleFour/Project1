@@ -1,67 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-<style type='text/css'>
-body {
-	font-family: Verdana;
-	padding: 40px;
-	background-color: white;
-}
-h1{
-	color: white;
-}
-h3 {
-	color: #00204E;
-}
+<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+-->
+<link href='https://fonts.googleapis.com/css?family=Fredoka One' rel='stylesheet'>
 
-.common-page-heading-container {
-	background-color: #1c3e6f;
-	font-weight: bold;
-	font-size: 20px;
-	color: white;
-	text-align: center;
-}
-
-.common-page-form select, input {
-	background-color: beige;
-	border-radius: 5px;
-	border-color: transparent;
-}
-
-.common-page-form-field {
-	margin: 2px auto;
-}
-
-.common-page-form {
-	border-width: 2px;
-	border-style: solid;
-	border-color: #00204E;
-	border-radius: 20px;
-	padding: 20px;
-	margin: 20px auto;
-}
-
-.common-page-sumbit-btn {
-	margin-top: 20px;
-}
-#home-page-introduction{
-	margin:40px auto;
-}
-#home-page-feedback-text{
-	margin-top: 20px;
-	font-style:italic;
-	color:rgba(53,53,53,0.705);
-}
-</style>
-
+<!--
 <head>
     <meta charset="UTF-8">
     <title>{{course['Name']}}</title>
 </head>
 <a href="https://carte.utoronto.ca/" target="_blank"><img src="/static/CARTE_logo.jpg" class="img-fluid" style="max-width: 25%"></a>
+-->
+<link rel="stylesheet" type="text/css" href="common.css">
+<link rel="stylesheet" type="text/css" href="home.css">
+<!--<head>
+  <meta charset="UTF-8">
+    <title>Education Pathways</title>
+</head>-->
+<style type="text/css">
+.navbar {
+        height: 65px;
+        background: #1c3e6f;
+        text-decoration: none;
+}
+.navbar-brand-top1{
+        padding: 10px 20px;
+        margin-right: 16px;
+        padding-top: 15px;
+        font-family: "Fredoka One";
+        font-size: 20px;
+        letter-spacing: 3px;
+        text-decoration: none;
+}
+.navbar-brand-top {
+        padding: 0;
+        margin-top: 12px;
+        text-align: left;
+        vertical-align: middle;
+        font-family: "Fredoka One";
+        font-size: 16px;
+        letter-spacing: 3px;
+        color: #adb5bd;
+        line-height: 65px;
+        text-decoration: none;
+}
+
+</style>
+{% block navbar %}
+<head>
+<div class="navbar" role="navigation">
+   <!-- <div class="container">-->
+        <div class="navbar-header">
+            <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar">About</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>-->
+            <a class="navbar-brand-top1" href="/" style="color: white", valign: "center">Education Pathways</a>
+            <a class="navbar-brand-top" href="/about/" style=valign:"center">About Us </a>
+            <a class="navbar-brand-top" href="/filter" style=valign:"center">Filter</a>
+            <a class="navbar-brand-top" href="/review/" style=valign:"center"> Review</a>
+            <a class="navbar-brand-top" href="/comparison/" style=valign:"center"> Comparison</a>
+        </div>
+
+</div>
+<!--
 <div class="common-page-heading-container">
 <h1 style="text-align: center">Education Pathways</h1>
-</div>
+</div>-->
+<div class="main-text">
 <body>
     {% for k,v in course.items() %}
         <p>
@@ -158,4 +165,6 @@ h3 {
         </tbody>
         </table>
 </body>
+</div>
 </html>
+{% endblock %}

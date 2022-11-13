@@ -11,8 +11,6 @@ import CourseDescriptionPage from "./CourseDescription";
 import SearchResultDisplay, { global_array } from './ResultDisplay'
 import Form from "./Form";
 import FeedbackList from './feedbacks/FeedbackList';
-<<<<<<< 8ac45ebd119024b83d432b75b37b2f057b8b3156
-
 import Comparison from './Comparison'
 import { useContext } from 'react';
 import FavoritesContext from './favorites-context'
@@ -103,8 +101,12 @@ export default class NavbarComp extends Component {
                 <Nav.Link className={classes.navpath} as={Link} to="/about">
                   About Us
                 </Nav.Link>
-		<a href="/filter"> Filter </a>
-                <Nav.Link className={classes.navpath} as={Link} to="/review">
+                {/*<Nav.Link as={Link} to="/filter">
+                  Filter
+                </Nav.Link>*/}
+		<a class="navbar-brand-top" href="/filter"> Filter </a>
+
+                <Nav.Link as={Link} to="/review">
                   Review
                 </Nav.Link>
 
