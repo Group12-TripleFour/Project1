@@ -44,16 +44,15 @@ def serve(path):
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
+# add filter page implementation
 @app.route('/filter',methods=['GET','POST'])
 def filter_page():
+    # build search form by request
     search = model.CourseSearchForm(request.form)
-    print("filter")
     if request.method=='POST':
-        print("post")
+        # call the filter function by requested info
         return controller.filter_courses(search)
-     # add filter.html !!!!!
     return render_template('filter.html',form=search)
-    #return send_from_directory(app.static_folder, 'filter_result.html')
 
 
 if __name__ == '__main__':

@@ -30,7 +30,6 @@ class Course(db.Document):
 
 class CourseSearchForm(Form):
     df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
-    print("df.columns",df.columns)
     divisions = [('Any','Any')] + sorted([
         (t,t) for t in set(df.Division.values)
     ])
@@ -52,6 +51,7 @@ class CourseSearchForm(Form):
         ('25','25'),
         ('50','50')
     ]
+    # add the minors to be part of the filter
     minors = [('Any','Any'), 
 	('Artificial Intelligence Minor','Artificial Intelligence Minor'),
 	('Advanced Manufacturing Minor','Advanced Manufacturing Minor'),
