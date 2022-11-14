@@ -5,6 +5,26 @@ import './css/Result.css'
 import Label from './Label'
 import "./css/styles.css";
 
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, child, get  } from "firebase/database";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyA6YzFrRBpdaOCf8xX3lZHPpYRDtYMH_7g",
+  authDomain: "educationpathways-c37ec.firebaseapp.com",
+  databaseURL: "https://educationpathways-c37ec-default-rtdb.firebaseio.com",
+  projectId: "educationpathways-c37ec",
+  storageBucket: "educationpathways-c37ec.appspot.com",
+  messagingSenderId: "868723117829",
+  appId: "1:868723117829:web:0ffafe21bca572ee2b716c"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// Initialize Realtime Database and get a reference to the service
+const database = getDatabase(app);
+
+const dbRef = ref(getDatabase());
 
 class SearchResultDisplay extends Component{
 
@@ -32,6 +52,7 @@ class SearchResultDisplay extends Component{
       .then(res => {
         console.log(`it is ${res.status}`)
         if (res.status === 200) {
+
           this.setState({results: []})
           
           if (res.data.length > 0) {
@@ -39,7 +60,16 @@ class SearchResultDisplay extends Component{
             let result_temp = []
             result_temp.push(<Label></Label>)
             for (let i = 0; i < len; i++) {
-                result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}></Result>)
+              get(child(dbRef, `feedback/${res.data[i].code}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                  result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}
+                    complexity={snapshot.val().complexity} workload={snapshot.val().workload}></Result>)
+                }else{
+                  result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}></Result>)
+                }
+              }).catch((error) => {
+                console.error(error);
+              });
             }
             this.setState({results: result_temp})
           } else if (res.data.length === 0) {
@@ -47,7 +77,18 @@ class SearchResultDisplay extends Component{
           }else {
             let result_temp = []
             result_temp.push(<Label></Label>)
-            result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}></Result>)
+
+            get(child(dbRef, `feedback/${res.data.course.code}`)).then((snapshot) => {
+              if (snapshot.exists()) {
+                result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}
+                  complexity={snapshot.val().complexity} workload={snapshot.val().workload}></Result>)
+              } else {
+                result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}></Result>)
+              }
+            }).catch((error) => {
+              console.error(error);
+            });
+
             this.setState({results: result_temp})
           }
 

@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import classes from './NewFeedbackForm.module.css'
 
-const options = ["Low", "Medium", "High"];
+const options = ["1", "2", "3", "4", "5"];
 
 
 function NewFeedbackForm(props) {

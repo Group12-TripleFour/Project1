@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Switch, Link, useLocation } from "react
 import CourseDescriptionPage from "./CourseDescription";
 // import Wishlist from './Wishlist';
 // import SignUp from './SignUp'
-import SearchResultDisplay, { global_array } from './ResultDisplay'
+import SearchResultDisplay from './ResultDisplay';
 import Form from "./Form";
 import FeedbackList from './feedbacks/FeedbackList';
 
@@ -18,28 +18,56 @@ import FavoritesContext from './favorites-context'
 import classes from './Navbar.module.css'
 import FeedbackSubmitPage from './FeedbackSubmitPage';
 
+// import { initializeApp } from "firebase/app";
+// import { getDatabase, ref, child, get  } from "firebase/database";
 
-const a = global_array;
-const DUMMY_DATA = [
-  {
-    coursename: 'ABC',
-    workload: 'H',
-    complexity: 'H',
-    usefulness: 'H',
-  },
-  {
-    coursename: 'BCA200',
-    workload: 'L',
-    complexity:'L',
-    usefulness: 'L',
-  },
-  {
-    coursename: 'QWE200',
-    workload: 'L',
-    complexity:'L',
-    usefulness: 'L',
-  },
-];
+// // Firebase configuration
+// const firebaseConfig = {
+//   apiKey: "AIzaSyA6YzFrRBpdaOCf8xX3lZHPpYRDtYMH_7g",
+//   authDomain: "educationpathways-c37ec.firebaseapp.com",
+//   databaseURL: "https://educationpathways-c37ec-default-rtdb.firebaseio.com",
+//   projectId: "educationpathways-c37ec",
+//   storageBucket: "educationpathways-c37ec.appspot.com",
+//   messagingSenderId: "868723117829",
+//   appId: "1:868723117829:web:0ffafe21bca572ee2b716c"
+// };
+
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// // Initialize Realtime Database and get a reference to the service
+// const database = getDatabase(app);
+
+// const dbRef = ref(getDatabase());
+// get(child(dbRef, `feedback/${course_name}`)).then((snapshot) => {
+//   if (snapshot.exists()) {
+//     console.log(snapshot.val());
+//   } else {
+//     console.log("No data available");
+//   }
+// }).catch((error) => {
+//   console.error(error);
+// });
+
+// const DUMMY_DATA = [
+//   {
+//     coursename: 'ABC',
+//     workload: 'H',
+//     complexity: 'H',
+//     usefulness: 'H',
+//   },
+//   {
+//     coursename: 'BCA200',
+//     workload: 'L',
+//     complexity:'L',
+//     usefulness: 'L',
+//   },
+//   {
+//     coursename: 'QWE200',
+//     workload: 'L',
+//     complexity:'L',
+//     usefulness: 'L',
+//   },
+// ];
 
 function CourseDescription (props) {
   let query = useQuery();
@@ -64,24 +92,26 @@ function Count(){
 export default class NavbarComp extends Component {
   
 
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
-  //     username: localStorage.getItem('username'),
-  //     login: false
-  //   }
-  // }
+  constructor(props){
+    super(props)
+    this.state = {
+      course_code : this.props.course_code,
+      course_name: this.props.course_name,
+      username: localStorage.getItem('username'),
+      login: false
+    }
+  }
 
-  // componentDidMount() {
-  //   if (localStorage.getItem('username') !== "") {
-  //     this.setState({username: localStorage.getItem('username')})
-  //   }
-  // }
+  componentDidMount() {
+    if (localStorage.getItem('username') !== "") {
+      this.setState({username: localStorage.getItem('username')})
+    }
+  }
 
-  // logOut = () => {
-  //   localStorage.setItem('username', "");
-  //   this.setState({username: ""})
-  // }
+  logOut = () => {
+    localStorage.setItem('username', "");
+    this.setState({username: ""})
+  }
 
   render() {
     return (
@@ -102,10 +132,9 @@ export default class NavbarComp extends Component {
                   About Us
                 </Nav.Link>
 
-                {/* <Nav.Link as={Link} to="/filter">
+                { <Nav.Link as={Link} to="/filter">
                   Filter
-                </Nav.Link> */}
-                <a href= "./filter.html"> filter </a>
+                </Nav.Link> }
 
                 <Nav.Link as={Link} to="/review">
                   Review
@@ -154,9 +183,9 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             <Route path="/review">
             <div>
               <FeedbackSubmitPage/>
-              <section>
+              {/* <section>
                 <FeedbackList feedbacks={DUMMY_DATA} />
-              </section>
+              </section> */}
             </div>
             </Route>
 
@@ -170,13 +199,14 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             
             <Route exact
               path="/courseDetails/:code"
-              render={props =>(<CourseDescriptionPage {...props} />)}>
+              render={props =>(<CourseDescriptionPage {...props} />)}
+              >
             </Route>
             <Route path="/">
               <SearchResultDisplay />
-              <section>
+              {/* <section>
                 <FeedbackList feedbacks={DUMMY_DATA}/>
-              </section>
+              </section> */}
             </Route>
 
             

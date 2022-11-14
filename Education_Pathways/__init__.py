@@ -8,7 +8,7 @@ from scipy.sparse import load_npz
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, render_template, request, redirect
 from wtforms import Form, StringField, SelectField
-import model
+from model import *
 
 def create_app():
 	app=Flask(__name__, instance_relative_config=True)
@@ -48,6 +48,13 @@ def create_app():
 	#	minor_choice=request.form.get("minor")
 	#	if request.method=='POST':
 	#		return minor_results(minor_choice)
+	#	return render_template('minor.html')
+
+	#@app.route('/review',methods=['GET','POST'])
+	#def review():
+	#	minor_choice=request.form.get("minor")
+	#	if request.method=='POST':
+	#		return post_review(minor_choice)
 	#	return render_template('minor.html')
 
 def search_courses(search_terms, n_return=10):
