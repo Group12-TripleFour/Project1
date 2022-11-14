@@ -8,7 +8,38 @@ import { BrowserRouter as Router, Route, Switch, Link, useLocation } from "react
 import CourseDescriptionPage from "./CourseDescription";
 // import Wishlist from './Wishlist';
 // import SignUp from './SignUp'
-import SearchResultDisplay from './ResultDisplay'
+import SearchResultDisplay, { global_array } from './ResultDisplay'
+import Form from "./Form";
+import FeedbackList from './feedbacks/FeedbackList';
+
+import Comparison from './Comparison'
+import { useContext } from 'react';
+import FavoritesContext from './favorites-context'
+import classes from './Navbar.module.css'
+import FeedbackSubmitPage from './FeedbackSubmitPage';
+
+
+const a = global_array;
+const DUMMY_DATA = [
+  {
+    coursename: 'ABC',
+    workload: 'H',
+    complexity: 'H',
+    usefulness: 'H',
+  },
+  {
+    coursename: 'BCA200',
+    workload: 'L',
+    complexity:'L',
+    usefulness: 'L',
+  },
+  {
+    coursename: 'QWE200',
+    workload: 'L',
+    complexity:'L',
+    usefulness: 'L',
+  },
+];
 
 function CourseDescription (props) {
   let query = useQuery();
@@ -21,27 +52,36 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
+function Count(){
+  const favoritesCtx = useContext(FavoritesContext);
+  console.log(favoritesCtx.totalFavorites);
+  return (
+    <span className={classes.badge}>{favoritesCtx.totalFavorites}</span> 
+  );
+}
+
 
 export default class NavbarComp extends Component {
+  
 
-  constructor(props){
-    super(props)
-    this.state = {
-      username: localStorage.getItem('username'),
-      login: false
-    }
-  }
+  // constructor(props){
+  //   super(props)
+  //   this.state = {
+  //     username: localStorage.getItem('username'),
+  //     login: false
+  //   }
+  // }
 
-  componentDidMount() {
-    if (localStorage.getItem('username') !== "") {
-      this.setState({username: localStorage.getItem('username')})
-    }
-  }
+  // componentDidMount() {
+  //   if (localStorage.getItem('username') !== "") {
+  //     this.setState({username: localStorage.getItem('username')})
+  //   }
+  // }
 
-  logOut = () => {
-    localStorage.setItem('username', "");
-    this.setState({username: ""})
-  }
+  // logOut = () => {
+  //   localStorage.setItem('username', "");
+  //   this.setState({username: ""})
+  // }
 
   render() {
     return (
@@ -58,14 +98,23 @@ export default class NavbarComp extends Component {
             <Navbar.Toggle />
             <Navbar.Collapse>
               <Nav>
-                <Nav.Link as={Link} to="/about">
+                <Nav.Link className={classes.navpath} as={Link} to="/about">
                   About Us
                 </Nav.Link>
 
-                {/* <Nav.Link href="/search" style={{ color: "white", display: "inline" }}>
-                  Search
+                {/* <Nav.Link as={Link} to="/filter">
+                  Filter
                 </Nav.Link> */}
+                <a className={classes.navpath} href= "./filter.html"> filter </a>
 
+                <Nav.Link className={classes.navpath} as={Link} to="/review">
+                  Review
+                </Nav.Link>
+
+                <Nav.Link className={classes.navpath} as={Link} to="/comparison">
+                  Comparison
+                  <span className='badge'><Count/></span>
+                </Nav.Link>
                 
 
               </Nav>
@@ -94,16 +143,44 @@ We are looking for feedback to improve Education Pathways and make it more usefu
       </div>
               {/* <SearchResultDisplay /> */}
             </Route>
-            <Route path="/search">
-              <SearchResultDisplay />
+
+              <Route path="/filter">
+              <div style={{ marginTop: "10%" }}>
+              <h2> Filter for courses </h2>
+              <Form />
+              </div>
+            </Route> 
+
+            <Route path="/review">
+            <div>
+              <FeedbackSubmitPage/>
+              <section>
+                <FeedbackList feedbacks={DUMMY_DATA} />
+              </section>
+            </div>
             </Route>
+
+            <Route path="/comparison">
+              <Comparison/>
+            </Route>
+
+            <Route path="/test">
+             
+            </Route>
+            
             <Route exact
               path="/courseDetails/:code"
               render={props =>(<CourseDescriptionPage {...props} />)}>
             </Route>
             <Route path="/">
               <SearchResultDisplay />
+              <section>
+                <FeedbackList feedbacks={DUMMY_DATA}/>
+              </section>
             </Route>
+
+            
+            
 
           </Switch>
         </div>

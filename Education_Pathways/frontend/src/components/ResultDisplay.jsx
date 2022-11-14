@@ -4,6 +4,7 @@ import Result from './Results'
 import './css/Result.css'
 import Label from './Label'
 import "./css/styles.css";
+export let global_array=[];
 
 
 class SearchResultDisplay extends Component{
@@ -12,12 +13,12 @@ class SearchResultDisplay extends Component{
     super();
     this.state = {
       input: "",
-      results: []
+      results: [], 
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  
   handleChange(event) {
     this.setState({input: event.target.value});
   }
@@ -25,6 +26,7 @@ class SearchResultDisplay extends Component{
   handleSubmit(event) {
     event.preventDefault();
     this.getData(this.state.input)
+    console.log(global_array)
   }
 
   getData = (input) => {
@@ -33,14 +35,21 @@ class SearchResultDisplay extends Component{
         console.log(`it is ${res.status}`)
         if (res.status === 200) {
           this.setState({results: []})
-          
+         
           if (res.data.length > 0) {
             let len = res.data.length
             let result_temp = []
+          
             result_temp.push(<Label></Label>)
             for (let i = 0; i < len; i++) {
                 result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}></Result>)
-            }
+                let dict={};
+                dict['coursename'] = res.data[i].code;
+                dict['workload'] = res.data[i].name;
+                global_array.push(dict);
+   
+                //result_temp.push(<button> + </button>)
+              }
             this.setState({results: result_temp})
           } else if (res.data.length === 0) {
             alert("Course not found")
@@ -48,6 +57,11 @@ class SearchResultDisplay extends Component{
             let result_temp = []
             result_temp.push(<Label></Label>)
             result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}></Result>)
+            //result_temp.push(<button> + </button>)
+            let dict={};
+            dict['coursename'] = res.data.course.code;
+            dict['workload'] = res.data.course.name;
+            global_array.push(dict);
             this.setState({results: result_temp})
           }
 

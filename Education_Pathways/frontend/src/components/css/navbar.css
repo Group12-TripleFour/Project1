@@ -3,16 +3,26 @@
   background: #1c3e6f;
 }
 
-.nav-item a {
+/* .nav-item a {
   color: white;
   font-weight: bold;
   font-size: 20px;
   margin-right: 20px;
 }
 
-.nav-item a:hover {
-  color: #c4d1e4;
-}
+
+.nav-item a:link { text-decoration: none; }
+
+.nav-item a:visited { text-decoration: none; }
+
+
+.nav-item a:hover { text-decoration: none; color: #c4d1e4;}
+
+
+.nav-item a:active { text-decoration: none; } 
+ */
+
+
 
 .navbar-brand img {
   margin-left: 20px;

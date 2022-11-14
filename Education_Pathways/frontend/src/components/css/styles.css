@@ -6,7 +6,11 @@
     font-weight: normal;
     color: #1c3e6f;
   } */
-  
+
+  h3{
+    padding: auto;
+    margin: auto;
+  }
   .bg-myBlue {
     background-color: #1c3e6f;
   }
@@ -17,8 +21,20 @@
   
   .myButton {
     background-color: #1c3e6f;
-    border: none;
+    border-color: #1c3e6e;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
     color: white;
+  }
+
+  .myButton:hover {
+    background-color: white;
+    border-color: #1c3e6e;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    color: #1c3e6f;
   }
   
   .resultsdiv {
