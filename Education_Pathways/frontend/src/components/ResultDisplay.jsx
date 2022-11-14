@@ -63,7 +63,7 @@ class SearchResultDisplay extends Component{
               get(child(dbRef, `feedback/${res.data[i].code}`)).then((snapshot) => {
                 if (snapshot.exists()) {
                   result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}
-                    complexity={snapshot.val().complexity} workload={snapshot.val().workload}></Result>)
+                    complexity={snapshot.val().complexity+"/5"} workload={snapshot.val().workload+"/5"}></Result>)
                 }else{
                   result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}></Result>)
                 }
@@ -81,7 +81,7 @@ class SearchResultDisplay extends Component{
             get(child(dbRef, `feedback/${res.data.course.code}`)).then((snapshot) => {
               if (snapshot.exists()) {
                 result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}
-                  complexity={snapshot.val().complexity} workload={snapshot.val().workload}></Result>)
+                  complexity={snapshot.val().complexity+"/5"} workload={snapshot.val().workload+"/5"}></Result>)
               } else {
                 result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}></Result>)
               }

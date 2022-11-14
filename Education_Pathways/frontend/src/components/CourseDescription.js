@@ -17,7 +17,7 @@ class CourseDescriptionPage extends Component {
     super(props)
 
     this.state = {
-      course_code: "",
+      course_code: this.props.course_code,
       course_name: "",
       division: "Faculty of Applied Science and Engineering",
       department: "Department of Edward S. Rogers Sr. Dept. of Electrical & Computer Engineering",
@@ -139,29 +139,19 @@ class CourseDescriptionPage extends Component {
             <h3>Course Description</h3>
             <p>{this.state.course_description}</p>
           </Row>
-          <Row className="col-item course-requisite">
+          <Row className="col-item reviews">
             <Row>
-              <h3>Course Requisites</h3>
+              <h3>Course Feedback</h3>
             </Row>
             <Row>
-              <Col className="requisites-display">
-                <h4>Pre-Requisites</h4>
+              <Col className="reviews">
+                <h4>Workload</h4>
                 <p>{this.state.prerequisites}</p>
               </Col>
-              <Col className="requisites-display">
-                <h4>Co-Requisites</h4>
+              <Col className="reviews">
+                <h4>Complexity</h4>
                 <p>{this.state.corequisites}</p>
               </Col>
-              <Col className="requisites-display">
-                <h4>Exclusion</h4>
-                <p>{this.state.exclusions}</p>
-              </Col>
-            </Row>
-            <Row>
-              <div className={"req-graph"}>
-                <img style={{width: "70%", marginBottom: "3%"}} alt="" src={requisite_label}></img>
-                <img src={`data:image/jpeg;base64,${this.state.graph}`} alt="" ></img>
-              </div>
             </Row>
           </Row>
         </Container>
