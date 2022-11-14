@@ -14,6 +14,8 @@ class Label extends Component{
       course_name: "Course Name",
       division: "Division",
       faculty: "Faculty",
+      workload: "Workload",
+      complexity: "Complexity",
       starred: "Status"
     };
   }
@@ -30,6 +32,8 @@ class Label extends Component{
             </Col>
             <Col><h5>{this.state.division}</h5></Col>
             <Col><h5>{this.state.faculty}</h5></Col>
+            <Col><h5>{this.state.workload}</h5></Col>
+            <Col><h5>{this.state.complexity}</h5></Col>
             {/* <Col><h5>{this.state.starred}</h5></Col> */}
         </Row>
       </Container>

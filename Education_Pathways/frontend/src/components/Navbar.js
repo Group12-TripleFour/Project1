@@ -107,7 +107,8 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             
             <Route exact
               path="/courseDetails/:code"
-              render={props =>(<CourseDescriptionPage {...props} />)}>
+              render={props =>(<CourseDescriptionPage {...props} />)}
+              >
             </Route>
             <Route path="/">
               <SearchResultDisplay />
