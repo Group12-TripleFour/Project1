@@ -19,6 +19,8 @@ class Result extends Component{
       course_name: this.props.course_name,
       division: "Division of Computer Engineering",
       faculty: "Faculty of Applied Science and Engineering",
+      workload: this.props.workload,
+      complexity: this.props.complexity,
       starred: false,
       username: localStorage.getItem('username')
     };
@@ -59,6 +61,8 @@ class Result extends Component{
             </Col>
             <Col>{this.state.division}</Col>
             <Col>{this.state.faculty}</Col>
+            <Col><h5>{this.state.workload}</h5></Col>
+            <Col><h5>{this.state.complexity}</h5></Col>
             {/* <Col><img src={star} alt=""/></Col> */}
             
         </Row>
