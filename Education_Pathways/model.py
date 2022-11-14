@@ -72,6 +72,13 @@ class CourseSearchForm(Form):
     search = StringField('Search Terms:')
     minor_search = SelectField('Minors',choices=minors)
 
+class CourseComparisonForm(Form):
+    df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
+    course_info = [('Any')] + sorted([
+        (t) for t in set(df.Name.values)
+    ])
+    course1 = SelectField('Course 1:',choices=course_info)
+    course2 = SelectField('Course 2:',choices=course_info)
 
 
 class Wishlist(db.Document):

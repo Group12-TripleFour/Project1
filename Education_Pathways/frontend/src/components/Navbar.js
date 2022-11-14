@@ -92,10 +92,10 @@ export default class NavbarComp extends Component {
                 <Nav.Link as={Link} to="/review">
                   Review
                 </Nav.Link>
-
-                <Nav.Link as={Link} to="/comparison">
+    <a class="navbar-brand-top" href="/Comparison"> Comparison </a>
+                {/*<Nav.Link as={Link} to="/comparison">
                   Comparsion
-                </Nav.Link>
+              </Nav.Link>*/}
 
               </Nav>
             </Navbar.Collapse>

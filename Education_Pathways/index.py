@@ -6,7 +6,7 @@ import os
 from flask_bootstrap import Bootstrap
 from . import config
 
-app = Flask(__name__, static_folder='frontend/build')#, instance_relative_config=True)
+app = Flask(__name__, static_folder='frontend/build') #instance_relative_config=True)
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
 app.config['TESTING'] = True
@@ -54,6 +54,16 @@ def filter_page():
      # add filter.html !!!!!
     return render_template('filter.html',form=search)
     #return send_from_directory(app.static_folder, 'filter_result.html')
+
+@app.route('/Comparison',methods=['GET','POST'])
+def comparison_page():
+    print("comparison")
+    search = model.CourseComparisonForm(request.form)
+    if request.method=='POST':
+        print("post")
+        return controller.compare_courses(search)
+    return render_template('comparison.html',form=search)
+
 
 
 if __name__ == '__main__':

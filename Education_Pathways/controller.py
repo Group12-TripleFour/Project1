@@ -163,7 +163,7 @@ def filter_courses(search):
 	#if search.data['search'] == '' or not search.data['search']:
 	#	print("search is empty")
 	#	return redirect('/filter')
-	results = filter_results(
+    results = filter_results(
 		search.data['search'],
 		search.data['select'],
 		search.data['divisions'],
@@ -171,9 +171,12 @@ def filter_courses(search):
 		search.data['campuses'],
 		search.data['minor_search'],
 		)
-	print("not empty",results)
-	#return send_from_directory(app.static_folder, 'filter_result.html')
-	return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
+    print("not empty",results)
+    print(len(results))
+    print(results[0])
+    #return send_from_directory(app.static_folder, 'filter_result.html')
+    return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
+
 def filter_results(search, year, division, department, campus, minor_search, n_return=10):
         n_return=int(n_return)
         year=int(year)
@@ -264,6 +267,26 @@ def course(code):
             activities=activities,
             zip=zip
             )
+
+
+
+# ------------------------------------------------------------
+@app.route('/comparison/results')
+def compare_courses(search):
+    # if (not search.data['course1']) or (not search.data['course2']):
+	# 	print("Nothing to Compare")
+	# 	return redirect('/Comparison')
+    results = compare_results(search.data['course1'],search.data['course2'])
+    #print(results)
+    return render_template('comparison_results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in [results]],form=search)
+
+def compare_results(course1,course2):
+    tf = df.set_index("Course")
+    df1 = tf.loc[tf.Name==course1].reset_index()[["Course","Name","Division","Course Description","Department","Pre-requisites","Course Level","APSC Electives","Term"]]
+    df2 = tf.loc[tf.Name==course2].reset_index()[["Course","Name","Division","Course Description","Department","Pre-requisites","Course Level","APSC Electives","Term"]]
+    df_combined = pd.concat([df1,df2])
+    return df_combined
+
 # -------------------- Wishlist related --------------------
 class UserWishlist(Resource):
     def get(self):
