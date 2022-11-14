@@ -98,20 +98,20 @@ export default class NavbarComp extends Component {
             <Navbar.Toggle />
             <Navbar.Collapse>
               <Nav>
-                <Nav.Link as={Link} to="/about">
+                <Nav.Link className={classes.navpath} as={Link} to="/about">
                   About Us
                 </Nav.Link>
 
                 {/* <Nav.Link as={Link} to="/filter">
                   Filter
                 </Nav.Link> */}
-                <a href= "./filter.html"> filter </a>
+                <a className={classes.navpath} href= "./filter.html"> filter </a>
 
-                <Nav.Link as={Link} to="/review">
+                <Nav.Link className={classes.navpath} as={Link} to="/review">
                   Review
                 </Nav.Link>
 
-                <Nav.Link as={Link} to="/comparison">
+                <Nav.Link className={classes.navpath} as={Link} to="/comparison">
                   Comparison
                   <span className='badge'><Count/></span>
                 </Nav.Link>
@@ -144,12 +144,12 @@ We are looking for feedback to improve Education Pathways and make it more usefu
               {/* <SearchResultDisplay /> */}
             </Route>
 
-            {/* <Route path="/filter">
+              <Route path="/filter">
               <div style={{ marginTop: "10%" }}>
               <h2> Filter for courses </h2>
               <Form />
               </div>
-            </Route> */}
+            </Route> 
 
             <Route path="/review">
             <div>

@@ -7,6 +7,7 @@ import './css/Result.css'
 import unstarred from './img/star.png'
 import starred from './img/starred.png'
 
+
 let star;
 
 class Result extends Component{
@@ -59,6 +60,7 @@ class Result extends Component{
             <Col>{this.state.division}</Col>
             <Col>{this.state.faculty}</Col>
             {/* <Col><img src={star} alt=""/></Col> */}
+            
         </Row>
         </a>
       </Container>

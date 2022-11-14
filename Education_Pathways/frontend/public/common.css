@@ -1,0 +1,18 @@
+<style>
+    body{
+        font-family: Verdana;
+        padding: 40px;
+        background-color: red;
+    }
+
+    h1{
+        color: #00204E;
+    }
+    h3{
+        color: #00204E;
+    }
+    .common-page-heading-container{
+        text-align: center;
+        margin:20px auto;
+    }
+</style>

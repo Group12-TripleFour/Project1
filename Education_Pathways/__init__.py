@@ -8,7 +8,37 @@ from scipy.sparse import load_npz
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, render_template, request, redirect
 from wtforms import Form, StringField, SelectField
-import model
+#import model
+
+class CourseSearchForm(Form):
+    df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
+    divisions = [('Any','Any')] + sorted([
+        (t,t) for t in set(df.Division.values)
+    ])
+
+    departments = [('Any','Any')] + sorted([
+        (t,t) for t in set(df.Department.values)
+    ])
+
+    campus = [('Any','Any')] + sorted([
+        (t,t) for t in set(df.Campus.values)
+    ])
+
+    year_choices = [
+        (t,t) for t in set(df['Course Level'].values)
+    ]
+            
+    top = [
+        ('10','10'),
+        ('25','25'),
+        ('50','50')
+    ]
+    select = SelectField('Course Year:', choices=year_choices)
+    top = SelectField('',choices=top)
+    divisions = SelectField('Division:', choices=divisions)
+    departments = SelectField('Department:', choices=departments)
+    campuses = SelectField('Campus:', choices=campus)
+    search = StringField('Search Terms:')
 
 def create_app():
 	app=Flask(__name__, instance_relative_config=True)
@@ -38,11 +68,20 @@ def create_app():
 			return filter_results(search)
 		# add filter.html !!!!!
 		return render_template('filter.html',form=search)
+        
 	@app.route('/filter/results')
 	def filter_results(search):
-		results=filter_courses(search.data['select'],search.data['divisions'],search.data['departments'],search.data['campuses'])
+		results=filter_courses(
+        search.data['select'],
+        search.data['divisions'],
+        search.data['departments'],
+        search.data['campuses']
+        )
+        
 		return render_template('filter_results.html',tables=[t.tohtml(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
-
+	return app
+        
+    
 	#@app.route('/minor',methods=['GET','POST'])
 	#def minor():
 	#	minor_choice=request.form.get("minor")

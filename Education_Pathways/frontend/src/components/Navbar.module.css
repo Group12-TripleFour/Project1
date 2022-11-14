@@ -5,3 +5,27 @@
   padding: 0 1rem;
   margin-left: 0.1rem;
 }
+
+.navpath{
+  color: #c4d1e4;
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.navpath:link { text-decoration: none; }
+
+
+.navpath:visited { text-decoration: none; }
+
+
+.navpath:hover { text-decoration: none;  color: #c4d1e4;}
+
+
+.navpath:active { text-decoration: none; }
+
+
+/* 
+.navpath:hover {
+  color: #c4d1e4;
+} */

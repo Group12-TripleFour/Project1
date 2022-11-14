@@ -6,7 +6,11 @@
     font-weight: normal;
     color: #1c3e6f;
   } */
-  
+
+  h3{
+    padding: auto;
+    margin: auto;
+  }
   .bg-myBlue {
     background-color: #1c3e6f;
   }
