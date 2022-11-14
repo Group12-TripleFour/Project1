@@ -51,6 +51,7 @@ class CourseSearchForm(Form):
         ('25','25'),
         ('50','50')
     ]
+
     # add the minors to be part of the filter
     minors = [('Any','Any'), 
 	('Artificial Intelligence Minor','Artificial Intelligence Minor'),

@@ -158,6 +158,7 @@ class ShowCourseGraph(Resource):
             return resp
 
 # ------------------------------------------------------------
+
 # add result page of the filter result
 @app.route('/filter/results')
 def filter_courses(search):
@@ -207,6 +208,7 @@ def filter_results(search, year, division, department, campus, minor_search, n_r
                         tables.pop()
                         year-=1
         return tables
+
 
 # course page by course code
 @app.route('/course/<code>')

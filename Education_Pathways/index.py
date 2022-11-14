@@ -44,6 +44,7 @@ def serve(path):
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
+
 # add filter page implementation
 @app.route('/filter',methods=['GET','POST'])
 def filter_page():
