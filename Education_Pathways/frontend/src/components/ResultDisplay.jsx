@@ -75,7 +75,11 @@ class SearchResultDisplay extends Component{
                     console.log(workload_cnt)
                   })
                   result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}
+<<<<<<< HEAD
                     complexity={(complexity_cnt/total).toFixed(1)+"/5"} workload={(workload_cnt/total).toFixed(1)+"/5"}></Result>)
+=======
+                    complexity={snapshot.val().complexity+"/5"} workload={snapshot.val().workload+"/5"}></Result>)
+>>>>>>> 855b4e13 (modified to display scores out of 5)
                 }else{
                   result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}></Result>)
                 }
