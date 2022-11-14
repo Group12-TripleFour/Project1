@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+-->
+<link href='https://fonts.googleapis.com/css?family=Fredoka One' rel='stylesheet'>
+<html lang="en">
+<link rel="stylesheet" type="text/css" href="results.css">
+<link rel="stylesheet" type="text/css" href="common.css">
+
+{% extends "bootstrap/base.html" %}
+
+{% block navbar %}
+<head>
+<div class="navbar">
+
+   <!-- <div class="container">-->
+        <img src="logo.png" class="img-fluid" style="max-width: 4.8%" align="left"/>
+        <div class="navbar-header">
+        <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar">About</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+        </button>-->
+
+        <a class="navbar-brand-top1" href="/" style="color: white" valign="center">Education Pathways</a>
+        <a class="navbar-brand-top" href="/about/" style=valign:"center">About Us </a>
+        <a class="navbar-brand-top" href="/filter" style=valign:"center">Filter</a>
+        <a class="navbar-brand-top" href="/review/" style=valign:"center"> Review</a>
+        <a class="navbar-brand-top" href="/comparison/" style=valign:"center"> Comparison</a>
+	</div>
+</div>
+<div class="main-text">
+<body>
+    {% from "_formhelpers.html" import render_field %}
+    <h3> Search for courses </h3>
+    <form class="common-page-form" method="post">
+      <dl>
+        {{ render_field(form.select) }}
+        <p>
+          Restrict by one of: <br>{{ render_field(form.divisions) }} <br>or {{ render_field(form.departments) }} <br>or {{ render_field(form.campuses) }}
+        </p> 
+        <p>
+        {{ render_field(form.search) }}
+      </p>
+    <p>
+    {{ render_field(form.minor_search) }}
+   </p>
+	</dl>
+      <p>{{render_field(form.top)}} <input type="submit" value="Search">
+      </p></form>
+      <h3> Search Results </h3>
+<div id="results-page-table-container">
+{% for table in tables %}
+            {{ table|safe }}
+</div>
+{% endfor %}
+</body>
+</div>
+</html>
+{% endblock %}

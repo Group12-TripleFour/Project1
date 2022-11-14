@@ -1,82 +1,30 @@
 # this is the controller
 
-from flask import jsonify, request
+from flask import jsonify, request, redirect, render_template
 from flask_restful import Resource, reqparse
 # from flask_cors import cross_origin
 from config import app
 from model import *
+import minor
 from fuzzy import nysiis
 import re
-
-
-# -------------------- User related --------------------
-class UserRegistration(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True)
-        parser.add_argument('password', required=True)
-        data = parser.parse_args()
-        username = data['username']
-        password = data['password']
-        
-        if User.objects(username=username):
-            resp = jsonify({'message': 'Username already exists'})
-            resp.status_code = 409
-            return resp
-        
-        try:
-            User.create(username, password)
-            resp = jsonify({})
-            resp.status_code = 200
-            return resp
-        except Exception as e:
-            resp = jsonify({'error': 'something went wrong'})
-            resp.status_code = 400
-            return resp
-
-
-class UserUpdatePwd(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True)
-        parser.add_argument('password', required=True)
-        data = parser.parse_args()
-        username = data['username']
-        password = data['password']
-        try:
-            User.create(username, password)
-            resp = jsonify({})
-            resp.status_code = 200
-            return resp
-        except Exception as e:
-            resp = jsonify({'error': 'something went wrong'})
-            resp.status_code = 400
-            return resp
-
-
-class UserLogin(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True)
-        parser.add_argument('password', required=True)
-        data = parser.parse_args()
-        username = data['username']
-        password = data['password']
-        try:
-            if User.verify_password(username, password):
-                resp = jsonify({'username': username})
-                resp.status_code = 200
-            else:
-                resp = jsonify({'message': 'Login failed'})
-                resp.status_code = 401
-                return resp
-        except Exception as e:
-            resp = jsonify({'error': 'something went wrong'})
-            resp.status_code = 400
-            return resp
-# ------------------------------------------------------------
+import pickle
+import networkx as nx
+import numpy as np
+from collections import defaultdict
+with open('resources/course_vectorizer.pickle','rb') as f:
+    vectorizer = pickle.load(f)
+with open('resources/course_vectors.npz','rb') as f:
+    course_vectors = pickle.load(f)
+with open('resources/graph.pickle','rb') as f:
+    G = nx.read_gpickle(f)
+df = pd.read_pickle('resources/df_processed.pickle').set_index('Code')
 
 # -------------------- Course related --------------------
+class FilterCourse(Resource):
+    def get(self):
+        input = request.args.get('division')
+
 class SearchCourse(Resource):
     def get(self):
         input = request.args.get('input')
@@ -211,10 +159,110 @@ class ShowCourseGraph(Resource):
 
 # ------------------------------------------------------------
 
+# add result page of the filter result
+@app.route('/filter/results')
+def filter_courses(search):
+	results = filter_results(
+		search.data['search'],
+		search.data['select'],
+		search.data['divisions'],
+		search.data['departments'],
+		search.data['campuses'],
+		search.data['minor_search'],
+		)
+	return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
+
+# function for filter implementation
+# input: filter parameter from selection bars
+# output: result table of the course information
+def filter_results(search, year, division, department, campus, minor_search, n_return=10):
+        n_return=int(n_return)
+        year=int(year)
+        pos_vals = np.zeros((len(df),))
+        idxs = [t[1] for t in sorted(list(zip(list(pos_vals),list(df.index))),key=lambda x:x[0],reverse=True)]
+        tf = df.loc[idxs]
+        requisite_vals = defaultdict(list)
+        if minor_search != 'Any':
+                course_names=minor.engineering_minor_list[minor_search]
+                tf.set_index('Course')
+                tf_return = tf.loc[course_names]
+                tables = [tf_return[['Course','Name','Division','Course Description','Department','Course Level']]]
+                return tables
+        if year!=0:
+                main_table = tf[tf['Course Level'] == year]
+        else:
+                main_table = tf[tf['Course Level'] == 1]
+        for name,filter in [('Division',division), ('Department',department), ('Campus',campus)]:
+                if filter != 'Any':
+                        main_table = main_table[main_table[name] == filter]
+        tables = [main_table[0:n_return][['Course','Name','Division','Course Description','Department','Course Level']]]
+        if year!=0:
+                year-=1
+                while (year>0):
+                        tf = df.loc[[t[0] for t in sorted(requisite_vals.items(),key=lambda x: x[1],reverse=True)]]
+                        tf = tf[tf['Course Level'] == year]
+                        for name,filter in [('Division',division), ('Department',department), ('Campus',campus)]:
+                                if filter != 'Any':
+                                        tf = tf[tf[name] == filter]
+                        tables.append(tf[0:n_return][['Course','Name','Division','Course Description','Department','Course Level']])
+                        tables.pop()
+                        year-=1
+        return tables
+
+
+# course page by course code
+@app.route('/course/<code>')
+def course(code):
+
+    #If the course code is not present in the dataset, progressively remove the last character until we get a match.
+    #For example, if there is no CSC413 then we find the first match that is CSC41.
+    #If there are no matches for any character, just go home.
+
+    if code not in df.index:
+        while True:
+            code = code[:-1]
+            if len(code) == 0:
+                return redirect('/')
+            t = df[df.index.str.contains(code)]
+            if len(t) > 0:
+                code = t.index[0]
+                return redirect('/courseDetails/' + code)
+
+
+    course = df.loc[code]
+    #use course network graph to identify pre and post requisites
+    pre = G.in_edges(code)
+    post = G.out_edges(code)
+    excl = course['Exclusion']
+    coreq = course['Corequisite']
+    aiprereq = course['AIPreReqs']
+    majors = course['MajorsOutcomes']
+    minors = course['MinorsOutcomes']
+    faseavailable = course['FASEAvailable']
+    mayberestricted = course['MaybeRestricted']
+    terms = course['Term']
+    activities = course['Activity']
+    course = {k:v for k,v in course.items() if k not in ['Course','Course Level Number','FASEAvailable','MaybeRestricted','URL','Pre-requisites','Exclusion','Corequisite','Recommended Preparation','AIPreReqs','MajorsOutcomes','MinorsOutcomes','Term','Activity'] and v==v}
+    return render_template(
+            'course.html',
+            course=course,
+            pre=pre, 
+            post=post,
+            excl=excl,
+            coreq=coreq,
+            aip=aiprereq,
+            majors=majors,
+            minors=minors,
+            faseavailable=faseavailable,
+            mayberestricted=mayberestricted,
+            terms=terms,
+            activities=activities,
+            zip=zip
+            )
 # -------------------- Wishlist related --------------------
 class UserWishlist(Resource):
     def get(self):
-        username = request.args.get('username')
+        username = "curr"
         try:
             resp = jsonify({'wishlist': User.get_wishlist(username_=username).expand()})
             resp.status_code = 200
@@ -225,10 +273,10 @@ class UserWishlist(Resource):
             return resp
 
     def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True)
-        data = parser.parse_args()
-        username = data['username']
+        #parser = reqparse.RequestParser()
+        #parser.add_argument('username', required=True)
+        #data = parser.parse_args()
+        username = "curr"# data['username']
         try:
             resp = jsonify({'wishlist': User.get_wishlist(username_=username).expand()})
             resp.status_code = 200
@@ -251,7 +299,7 @@ class UserWishlist(Resource):
 
 class UserWishlistAdd(Resource):
     def get(self):
-        username = request.args.get('username')
+        username = "curr"#request.args.get('username')
         code = request.args.get('code')
         try:
             course = Course.get(code)
@@ -267,10 +315,10 @@ class UserWishlistAdd(Resource):
 
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True)
+        #parser.add_argument('username', required=True)
         parser.add_argument('code', required=True)
         data = parser.parse_args()
-        username = data['username']
+        username = "curr" #data['username']
         code = data['code']
         try:
             course = Course.get(code)
@@ -287,7 +335,7 @@ class UserWishlistAdd(Resource):
 
 class UserWishlistRemove(Resource):
     def get(self):
-        username = request.args.get('username')
+        username = "curr" #request.args.get('username')
         code = request.args.get('code')
         try:
             course = Course.get(code)
@@ -303,10 +351,10 @@ class UserWishlistRemove(Resource):
 
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True)
+        #parser.add_argument('username', required=True)
         parser.add_argument('code', required=True)
         data = parser.parse_args()
-        username = data['username']
+        username = "curr"#data['username']
         code = data['code']
         try:
             course = Course.get(code)
@@ -323,7 +371,7 @@ class UserWishlistRemove(Resource):
 
 class UserWishlistMinorCheck(Resource):
     def get(self):
-        username = request.args.get('username')
+        username = "curr"#request.args.get('username')
         try:
             wl = User.get_wishlist(username_=username)
             courses = [c.code for c in wl.course]
@@ -339,10 +387,10 @@ class UserWishlistMinorCheck(Resource):
             return resp
     
     def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True)
-        data = parser.parse_args()
-        username = data['username']
+        #parser = reqparse.RequestParser()
+        #parser.add_argument('username', required=True)
+        #data = parser.parse_args()
+        username = "curr"#data['username']
         try:
             wl = User.get_wishlist(username_=username)
             courses = [c.code for c in wl.course]

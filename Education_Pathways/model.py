@@ -1,6 +1,8 @@
 # This is the model
 
 from config import app, db
+from wtforms import Form, StringField, SelectField
+import pandas as pd
 
 class Course(db.Document):
     code = db.StringField(required=True, unique=True)
@@ -49,17 +51,32 @@ class CourseSearchForm(Form):
         ('25','25'),
         ('50','50')
     ]
+
+    # add the minors to be part of the filter
+    minors = [('Any','Any'), 
+	('Artificial Intelligence Minor','Artificial Intelligence Minor'),
+	('Advanced Manufacturing Minor','Advanced Manufacturing Minor'),
+	('Bioengineering Minor','Bioengineering Minor'),
+	('Environmental Engineering Minor','Environmental Engineering Minor'),
+	('Sustainable Energy Minor','Sustainable Energy Minor'),
+	('Engineering Business Minor','Engineering Business Minor'),
+	('Robotics and Mechatronics Minor','Robotics and Mechatronics Minor'), 
+	('Biomedical Engineering Minor','Biomedical Engineering Minor'),
+	('Nanoengineering Minor','Nanoengineering Minor'),
+	('Music Performance Minor','Music Performance Minor')]
+
     select = SelectField('Course Year:', choices=year_choices)
     top = SelectField('',choices=top)
     divisions = SelectField('Division:', choices=divisions)
     departments = SelectField('Department:', choices=departments)
     campuses = SelectField('Campus:', choices=campus)
-
+    search = StringField('Search Terms:')
+    minor_search = SelectField('Minors',choices=minors)
 
 
 
 class Wishlist(db.Document):
-    username = db.StringField(required=True, unique=True)
+    #username = db.StringField(required=True, unique=True)
     course = db.ListField(db.ReferenceField(Course))
     comments = db.DictField()
 
@@ -89,43 +106,43 @@ class Wishlist(db.Document):
 
 
 class User(db.Document):
-    username = db.StringField(required=True, unique=True)
-    password = db.StringField(required=True)
+    #username = db.StringField(required=True, unique=True)
+    #password = db.StringField(required=True)
 
     @classmethod
-    def create(cls, username_, password_):
-        usr = cls.objects(username=username_)
-        Wishlist.create(username_)
-        usr.update_one(set__username=username_, 
-                       set__password=password_,
-                       upsert=True)
+    def create(cls):
+        usr = cls.objects(username="curr")
+        Wishlist.create("curr")
+        #usr.update_one(set__username=username_, 
+        #               set__password=password_,
+        #               upsert=True)
         return True
 
     @classmethod
-    def delete(cls, username_):
-        usr = cls.objects(username=username_).get()
+    def delete(cls):
+        usr = cls.objects(username="curr").get()
         if usr:
             usr.delete()
-            wl = Wishlist.objects(username=username_).get()
+            wl = Wishlist.objects(username="curr").get()
             if wl:
                 wl.delete()
             return True
         return False
 
-    @classmethod
-    def verify_password(cls, username_, password_):
-        usr = cls.objects(username=username_).get()
-        if usr and usr.password == password_:
-                return True
-        return False
+    #@classmethod
+    #def verify_password(cls, username_, password_):
+    #    usr = cls.objects(username=username_).get()
+    #    if usr and usr.password == password_:
+    #            return True
+    #    return False
     
     @classmethod
-    def get_wishlist(cls, username_):
-        return Wishlist.objects(username=username_).get()
+    def get_wishlist(cls):
+        return Wishlist.objects(username="curr").get()
 
     @classmethod
-    def add_comment(cls, username_, code_, comment_):
-        usr = cls.objects(username=username_).get()
+    def add_comment(cls, code_, comment_):
+        usr = cls.objects(username="curr").get()
         if usr:
             usr.comments[code_] = comment_
             usr.save()
