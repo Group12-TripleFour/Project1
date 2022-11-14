@@ -1,11 +1,9 @@
 # this is the controller
-
 from flask import jsonify, request, redirect, render_template
 from flask_restful import Resource, reqparse
-# from flask_cors import cross_origin
-from .config import app
-from .model import *
-from . import minor
+from config import app
+from model import *
+import minor
 from fuzzy import nysiis
 import re
 import pickle
@@ -171,9 +169,7 @@ def filter_courses(search):
 		search.data['campuses'],
 		search.data['minor_search'],
 		)
-    print("not empty",results)
-    print(len(results))
-    print(results[0])
+
     #return send_from_directory(app.static_folder, 'filter_result.html')
     return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
 
@@ -270,21 +266,23 @@ def course(code):
 
 
 
-# ------------------------------------------------------------
+# --------------------Course Comparison Feature----------------------
 @app.route('/comparison/results')
 def compare_courses(search):
-    # if (not search.data['course1']) or (not search.data['course2']):
-	# 	print("Nothing to Compare")
-	# 	return redirect('/Comparison')
+    # Store course information as a pd dataframe so that we can convert to html table directly 
     results = compare_results(search.data['course1'],search.data['course2'])
-    #print(results)
     return render_template('comparison_results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in [results]],form=search)
 
+# Retreieve relevant course information for user selected courses and store into a pd dataframe 
 def compare_results(course1,course2):
     tf = df.set_index("Course")
+    # relevant course info: course code (with hyperlink), name, division, description, department, pre-requistes, level, APSC electives, and terms
     df1 = tf.loc[tf.Name==course1].reset_index()[["Course","Name","Division","Course Description","Department","Pre-requisites","Course Level","APSC Electives","Term"]]
     df2 = tf.loc[tf.Name==course2].reset_index()[["Course","Name","Division","Course Description","Department","Pre-requisites","Course Level","APSC Electives","Term"]]
     df_combined = pd.concat([df1,df2])
+    # convert lists to strings for dataframe columns 
+    df_combined["Term"] = [','.join(map(str, l)) for l in df_combined["Term"]]
+    df_combined["Pre-requisites"] = [','.join(map(str, l)) for l in df_combined["Pre-requisites"]]
     return df_combined
 
 # -------------------- Wishlist related --------------------

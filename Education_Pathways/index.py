@@ -4,9 +4,9 @@ from flask import Flask, send_from_directory,render_template,request,redirect
 from flask_restful import Api
 import os
 from flask_bootstrap import Bootstrap
-from . import config
+import config
 
-app = Flask(__name__, static_folder='frontend/build') #instance_relative_config=True)
+app = Flask(__name__, static_folder='frontend/build')#, instance_relative_config=True)
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
 app.config['TESTING'] = True
@@ -19,7 +19,7 @@ config.init_db(app)
 config.init_cors(app)
 
 # API Endpoints
-from . import controller
+import controller
 api = Api(app)
 #api.add_resource(controller.UserRegistration, '/user/register')
 #api.add_resource(controller.UserLogin, '/user/login')
@@ -34,7 +34,7 @@ api.add_resource(controller.UserWishlistRemove, '/wishlist/removeCourse')
 api.add_resource(controller.UserWishlistMinorCheck, '/wishlist/minorCheck')
 
 #api.add_resource(controller.FilterCourse, '/filter')
-from . import model
+import model
 
 @app.route("/", defaults={'path': ''})
 @app.route('/<path:path>')
@@ -47,33 +47,23 @@ def serve(path):
 @app.route('/filter',methods=['GET','POST'])
 def filter_page():
     search = model.CourseSearchForm(request.form)
-    print("filter")
     if request.method=='POST':
-        print("post")
         return controller.filter_courses(search)
-     # add filter.html !!!!!
     return render_template('filter.html',form=search)
-    #return send_from_directory(app.static_folder, 'filter_result.html')
 
 @app.route('/Comparison',methods=['GET','POST'])
 def comparison_page():
-    print("comparison")
+    # add search form 
     search = model.CourseComparisonForm(request.form)
     if request.method=='POST':
-        print("post")
+        # retrieve relevant course information if users have made selections
         return controller.compare_courses(search)
     return render_template('comparison.html',form=search)
 
 
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', port=5000, extra_files=['app.py', 'controller.py', 'model.py'])
     app.run(threaded=True, port=5000)
-    # with open("test.json") as f:
-    #     data = json.load(f)
-    # for i in range(75):
-    #     i = str(i)
-    #     Course(name=data["name"][i], code=data["code"][i], description=data["description"][i], prereq=data["prereq"][i], coreq=data["coreq"][i], exclusion=data["exclusion"][i]).save()
 
     
     
