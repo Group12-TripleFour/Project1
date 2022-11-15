@@ -17,28 +17,6 @@ import FeedbackSubmitPage from './FeedbackSubmitPage';
 
 import NewFeedbackForm from './feedbacks/NewFeedbackForm';
 
-const a = global_array;
-const DUMMY_DATA = [
-  {
-    coursename: 'ABC',
-    workload: 'H',
-    complexity: 'H',
-    usefulness: 'H',
-  },
-  {
-    coursename: 'BCA200',
-    workload: 'L',
-    complexity:'L',
-    usefulness: 'L',
-  },
-  {
-    coursename: 'QWE200',
-    workload: 'L',
-    complexity:'L',
-    usefulness: 'L',
-  }
-];
-
 function CourseDescription (props) {
   let query = useQuery();
   return <CourseDescriptionPage code={query.get("code")} />;
@@ -78,15 +56,23 @@ export default class NavbarComp extends Component {
             <Navbar.Toggle />
             <Navbar.Collapse>
               <Nav>
+			
                 <Nav.Link className={classes.navpath} as={Link} to="/about">
                   About Us
                 </Nav.Link>
 
-		<a class="navbar-brand-top" href="/filter"> Filter </a>
+		<a class="navbar-brand-top" href="/filter"> 
+		  Filter 
+		</a>
+
                 <Nav.Link as={Link} to="/review">
                   Review
                 </Nav.Link>
-    <a class="navbar-brand-top" href="/Comparison"> Comparison </a>
+
+    		<a class="navbar-brand-top" href="/Comparison"> 
+		  Comparison 
+		</a>
+
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -116,9 +102,6 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             <Route path="/review">
             <div>
               <FeedbackSubmitPage/>
-              <section>
-                <FeedbackList feedbacks={DUMMY_DATA} />
-              </section>
             </div>
             </Route>       
             
