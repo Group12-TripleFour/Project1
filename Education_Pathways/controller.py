@@ -1,6 +1,7 @@
 # this is the controller
 from flask import jsonify, request, redirect, render_template
 from flask_restful import Resource, reqparse
+# from flask_cors import cross_origin
 from config import app
 from model import *
 import minor
@@ -158,9 +159,6 @@ class ShowCourseGraph(Resource):
 # ------------------------------------------------------------
 @app.route('/filter/results')
 def filter_courses(search):
-	#if search.data['search'] == '' or not search.data['search']:
-	#	print("search is empty")
-	#	return redirect('/filter')
     results = filter_results(
 		search.data['search'],
 		search.data['select'],
@@ -170,9 +168,11 @@ def filter_courses(search):
 		search.data['minor_search'],
 		)
 
-    #return send_from_directory(app.static_folder, 'filter_result.html')
     return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
 
+# function for filter implementation
+# input: filter parameter from selection bars
+# output: result table of the course information
 def filter_results(search, year, division, department, campus, minor_search, n_return=10):
         n_return=int(n_return)
         year=int(year)
