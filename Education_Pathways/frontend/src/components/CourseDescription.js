@@ -45,7 +45,7 @@ class CourseDescriptionPage extends Component {
       workload: [],
       complexity: [],
       usefulness: [],
-      feedback: [], //{workload: [], complexity: [], usefulness: []}
+      feedback: [],
       graph : "",
       course_description: "",
       syllabus: "",
@@ -183,13 +183,17 @@ class CourseDescriptionPage extends Component {
               <h3>Course Feedback</h3>
             </Row>
             <Row>
-              <Col className="reviews">
+              <Col className="col-item">
                 <h4>Workload</h4>
-                <p>{this.state.prerequisites}</p>
+                <h3>{`${this.state.workload}/5`}</h3>
               </Col>
-              <Col className="reviews">
+              <Col className="col-item">
                 <h4>Complexity</h4>
-                <p>{this.state.corequisites}</p>
+                <h3>{`${this.state.complexity}/5`}</h3>
+              </Col>
+              <Col className="col-item">
+                <h4>Usefulness</h4>
+                <p>{`${this.state.usefulness}`}</p>
               </Col>
             </Row>
           </Row>

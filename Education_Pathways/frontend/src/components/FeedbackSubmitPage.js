@@ -38,16 +38,6 @@ function FeedbackSubmitPage(){
       ).then(()=>{
         history.replace('/')
       });
-
-      // fetch('https://educationpathways-c37ec-default-rtdb.firebaseio.com/feedback.json',
-      // {
-      //   method:'POST',
-      //   body:JSON.stringify(feedback),
-      //   header:{'Content-Type': 'application/json'}
-      // }
-      // ).then(()=>{
-      //   history.replace('/')
-      // });
     }
 
     return (

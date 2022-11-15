@@ -5,15 +5,9 @@ import logo from './img/logo.png'
 import { Navbar, Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch, Link, useLocation } from "react-router-dom";
 import CourseDescriptionPage from "./CourseDescription";
-<<<<<<< HEAD
 
 
 import SearchResultDisplay, { global_array } from './ResultDisplay'
-=======
-// import Wishlist from './Wishlist';
-// import SignUp from './SignUp'
-import SearchResultDisplay from './ResultDisplay';
->>>>>>> 264cf6e9 (Modified setting database data to use firebase functions and added retrieving database data for search results)
 import Form from "./Form";
 import FeedbackList from './feedbacks/FeedbackList';
 import { useContext } from 'react';
@@ -47,31 +41,6 @@ function addFeedbackHandler(feedback){
 
 export default class NavbarComp extends Component {
   
-<<<<<<< HEAD
-=======
-
-  constructor(props){
-    super(props)
-    this.state = {
-      course_code : this.props.course_code,
-      course_name: this.props.course_name,
-      username: localStorage.getItem('username'),
-      login: false
-    }
-  }
-
-  componentDidMount() {
-    if (localStorage.getItem('username') !== "") {
-      this.setState({username: localStorage.getItem('username')})
-    }
-  }
-
-  logOut = () => {
-    localStorage.setItem('username', "");
-    this.setState({username: ""})
-  }
-
->>>>>>> 264cf6e9 (Modified setting database data to use firebase functions and added retrieving database data for search results)
   render() {
     return (
       <Router>
@@ -92,15 +61,9 @@ export default class NavbarComp extends Component {
                   About Us
                 </Nav.Link>
 
-<<<<<<< HEAD
 		<a class="navbar-brand-top" href="/filter"> 
 		  Filter 
 		</a>
-=======
-                { <Nav.Link as={Link} to="/filter">
-                  Filter
-                </Nav.Link> }
->>>>>>> 264cf6e9 (Modified setting database data to use firebase functions and added retrieving database data for search results)
 
                 <Nav.Link as={Link} to="/review">
                   Review
@@ -139,12 +102,6 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             <Route path="/review">
             <div>
               <FeedbackSubmitPage/>
-<<<<<<< HEAD
-=======
-              {/* <section>
-                <FeedbackList feedbacks={DUMMY_DATA} />
-              </section> */}
->>>>>>> 264cf6e9 (Modified setting database data to use firebase functions and added retrieving database data for search results)
             </div>
             </Route>       
             
@@ -155,12 +112,6 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             </Route>
             <Route path="/">
               <SearchResultDisplay />
-<<<<<<< HEAD
-=======
-              {/* <section>
-                <FeedbackList feedbacks={DUMMY_DATA}/>
-              </section> */}
->>>>>>> 264cf6e9 (Modified setting database data to use firebase functions and added retrieving database data for search results)
             </Route>
 
           </Switch>
