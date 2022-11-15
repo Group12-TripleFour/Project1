@@ -1,3 +1,8 @@
+/* 
+This file creates the page for users to submit the feedback. 
+It simply holds the another component <NewFeedbackForm> and a submit handler who sends data to the database and redirect the page after submission.
+*/
+
 import { useHistory } from 'react-router-dom';
 import NewFeedbackForm from './feedbacks/NewFeedbackForm';
 
