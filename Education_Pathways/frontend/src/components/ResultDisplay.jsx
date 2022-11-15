@@ -26,7 +26,7 @@ class SearchResultDisplay extends Component{
   handleSubmit(event) {
     event.preventDefault();
     this.getData(this.state.input)
-    console.log(global_array)
+
   }
 
   getData = (input) => {
