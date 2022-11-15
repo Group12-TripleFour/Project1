@@ -4,15 +4,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import logo from './img/logo.png'
 import { Navbar, Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch, Link, useLocation } from "react-router-dom";
-// import LogIn from "./LogIn.jsx";
 import CourseDescriptionPage from "./CourseDescription";
-// import Wishlist from './Wishlist';
-// import SignUp from './SignUp'
-<<<<<<< HEAD
+
+
 import SearchResultDisplay, { global_array } from './ResultDisplay'
 import Form from "./Form";
 import FeedbackList from './feedbacks/FeedbackList';
-import Comparison from './Comparison'
 import { useContext } from 'react';
 import FavoritesContext from './favorites-context'
 import classes from './Navbar.module.css'
@@ -24,17 +21,6 @@ const a = global_array;
 const DUMMY_DATA = [
   {
     coursename: 'ABC',
-=======
-import SearchResultDisplay from './ResultDisplay'
-import Form from "./Form";
-import FeedbackList from './feedbacks/FeedbackList';
-import NewFeedbackForm from './feedbacks/NewFeedbackForm';
-// import Comparison from './Comparison'
-
-const DUMMY_DATA = [
-  {
-    coursename: 'ABC100',
->>>>>>> d4480358326673acb54b8768daf71999c184ffe7
     workload: 'H',
     complexity: 'H',
     usefulness: 'H',
@@ -45,15 +31,12 @@ const DUMMY_DATA = [
     complexity:'L',
     usefulness: 'L',
   },
-<<<<<<< HEAD
   {
     coursename: 'QWE200',
     workload: 'L',
     complexity:'L',
     usefulness: 'L',
-  },
-=======
->>>>>>> d4480358326673acb54b8768daf71999c184ffe7
+  }
 ];
 
 function CourseDescription (props) {
@@ -67,44 +50,21 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-<<<<<<< HEAD
 function Count(){
   const favoritesCtx = useContext(FavoritesContext);
   console.log(favoritesCtx.totalFavorites);
   return (
     <span className={classes.badge}>{favoritesCtx.totalFavorites}</span> 
   );
-=======
+
 function addFeedbackHandler(feedback){
   console.log(feedback);
->>>>>>> d4480358326673acb54b8768daf71999c184ffe7
 }
 
 
-<<<<<<< HEAD
+
 export default class NavbarComp extends Component {
   
-
-=======
->>>>>>> d4480358326673acb54b8768daf71999c184ffe7
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
-  //     username: localStorage.getItem('username'),
-  //     login: false
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   if (localStorage.getItem('username') !== "") {
-  //     this.setState({username: localStorage.getItem('username')})
-  //   }
-  // }
-
-  // logOut = () => {
-  //   localStorage.setItem('username', "");
-  //   this.setState({username: ""})
-  // }
 
   render() {
     return (
@@ -124,35 +84,13 @@ export default class NavbarComp extends Component {
                 <Nav.Link className={classes.navpath} as={Link} to="/about">
                   About Us
                 </Nav.Link>
-                {/*<Nav.Link as={Link} to="/filter">
-                  Filter
-                </Nav.Link>*/}
-		<a class="navbar-brand-top" href="/filter"> Filter </a>
 
-<<<<<<< HEAD
+		<a class="navbar-brand-top" href="/filter"> Filter </a>
                 <Nav.Link as={Link} to="/review">
                   Review
                 </Nav.Link>
+    <a class="navbar-brand-top" href="/Comparison"> Comparison </a>
 
-                <Nav.Link className={classes.navpath} as={Link} to="/comparison">
-                  Comparison
-                  <span className='badge'><Count/></span>
-                </Nav.Link>
-                
-=======
-                {/*<Nav.Link as={Link} to="/filter">
-                  Filter
-                </Nav.Link>*/}
-		<a class="navbar-brand-top" href="/filter"> Filter </a>
-
-                <Nav.Link as={Link} to="/review">
-                  Review
-                </Nav.Link>
-
-                <Nav.Link as={Link} to="/comparison">
-                  Comparsion
-                </Nav.Link>
->>>>>>> d4480358326673acb54b8768daf71999c184ffe7
 
               </Nav>
             </Navbar.Collapse>
@@ -181,26 +119,6 @@ We are looking for feedback to improve Education Pathways and make it more usefu
               {/* <SearchResultDisplay /> */}
             </Route>
 
-<<<<<<< HEAD
-<<<<<<< 8ac45ebd119024b83d432b75b37b2f057b8b3156
-              <Route path="/filter">
-=======
-            {/*<Route path="/filter">
->>>>>>> finish filter funcionality, need to adjust format
-=======
-            {/*<Route path="/filter">
->>>>>>> d4480358326673acb54b8768daf71999c184ffe7
-              <div style={{ marginTop: "10%" }}>
-              <h2> Filter for courses </h2>
-              <Form />
-              </div>
-<<<<<<< HEAD
-<<<<<<< 8ac45ebd119024b83d432b75b37b2f057b8b3156
-            </Route> 
-=======
-            </Route>*/}
->>>>>>> finish filter funcionality, need to adjust format
-
             <Route path="/review">
             <div>
               <FeedbackSubmitPage/>
@@ -208,16 +126,8 @@ We are looking for feedback to improve Education Pathways and make it more usefu
                 <FeedbackList feedbacks={DUMMY_DATA} />
               </section>
             </div>
-            </Route>
+            </Route>       
 
-            <Route path="/comparison">
-              <Comparison/>
-            </Route>
-
-            <Route path="/test">
-             
-=======
-            </Route>*/}
 
             <Route path="/review">
               <div style={{ marginTop: "3%" }}>           <section>
@@ -228,7 +138,6 @@ We are looking for feedback to improve Education Pathways and make it more usefu
                 <FeedbackList feedbacks={DUMMY_DATA} />
               </section>
               </div> 
->>>>>>> d4480358326673acb54b8768daf71999c184ffe7
             </Route>
             
             <Route exact
@@ -242,12 +151,6 @@ We are looking for feedback to improve Education Pathways and make it more usefu
               </section>
             </Route>
 
-<<<<<<< 8ac45ebd119024b83d432b75b37b2f057b8b3156
-            
-            
-
-=======
->>>>>>> finish filter funcionality, need to adjust format
           </Switch>
         </div>
         
