@@ -160,13 +160,13 @@ class ShowCourseGraph(Resource):
 @app.route('/filter/results')
 def filter_courses(search):
     results = filter_results(
-		search.data['search'],
-		search.data['select'],
-		search.data['divisions'],
-		search.data['departments'],
-		search.data['campuses'],
-		search.data['minor_search'],
-		)
+	    search.data['search'],
+	    search.data['select'],
+	    search.data['divisions'],
+	    search.data['departments'],
+	    search.data['campuses'],
+	    search.data['minor_search'],
+	    )
 
     return render_template('results.html',tables=[t.to_html(classes='data',index=False,na_rep='',render_links=True, escape=False) for t in results],form=search)
 
