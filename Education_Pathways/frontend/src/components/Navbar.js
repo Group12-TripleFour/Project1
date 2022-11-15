@@ -111,9 +111,6 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             </Route>
             <Route path="/">
               <SearchResultDisplay />
-              <section>
-                <FeedbackList feedbacks={DUMMY_DATA}/>
-              </section>
             </Route>
 
           </Switch>
