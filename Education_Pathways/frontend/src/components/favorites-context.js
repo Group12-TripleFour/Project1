@@ -1,3 +1,8 @@
+"""
+This file is used to record the feedback items submitted by the users. 
+Code Reference: https://github.com/academind/react-complete-guide-code/blob/zz-reactjs-summary/code/19-finished/src/
+"""
+
 import { createContext, useState } from 'react';
 
 const FavoritesContext = createContext({
