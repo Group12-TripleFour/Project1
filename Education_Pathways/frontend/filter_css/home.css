@@ -1,11 +1,17 @@
 #home-page-introduction{
 	margin:40px 40px;
-	font-family:cursive;
+	font-family:"Gill Sans MT";
 	position:middle;
-	font-size: 15px;
+	font-size: 18px;
 }
 #home-page-feedback-text{
 	margin-top: 20px;
 	font-style:italic;
 	color:rgba(53,53,53,0.705);
+}
+#comparison-page-introduction{
+	margin:40px 40px;
+	font-family:"Gills Sans MT";
+	position:middle;
+	font-size:20px;
 }
