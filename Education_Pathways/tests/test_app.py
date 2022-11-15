@@ -20,7 +20,4 @@ def test_course_details_endpoint():
 def test_course_ece444_endpoint():
     tester = app.test_client()
     response = tester.get("/course/ECE444H1")
-
     assert response.status_code == 200
-
-
