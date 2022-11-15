@@ -1,3 +1,8 @@
+/*
+This file creates fields for users to submit the their feedback (i.e enter coursename, select level of workload, etc.) for the certain course. 
+As we said in the architecture design, the user-entered data will be stored in an independent database.
+*/
+
 import Card from './Card';
 import { useRef } from 'react';
 import { useState } from 'react';
