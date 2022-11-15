@@ -157,6 +157,8 @@ class ShowCourseGraph(Resource):
             return resp
 
 # ------------------------------------------------------------
+
+# add result page of the filter result
 @app.route('/filter/results')
 def filter_courses(search):
 	results = filter_results(
@@ -178,14 +180,11 @@ def filter_results(search, year, division, department, campus, minor_search, n_r
         pos_vals = np.zeros((len(df),))
         idxs = [t[1] for t in sorted(list(zip(list(pos_vals),list(df.index))),key=lambda x:x[0],reverse=True)]
         tf = df.loc[idxs]
-        print("type is:",tf)
         requisite_vals = defaultdict(list)
         if minor_search != 'Any':
                 course_names=minor.engineering_minor_list[minor_search]
-                print("course_names",course_names)
                 tf.set_index('Course')
                 tf_return = tf.loc[course_names]
-                print("tf_return",tf_return)
                 tables = [tf_return[['Course','Name','Division','Course Description','Department','Course Level']]]
                 return tables
         if year!=0:
@@ -194,12 +193,6 @@ def filter_results(search, year, division, department, campus, minor_search, n_r
                 main_table = tf[tf['Course Level'] == 1]
         for name,filter in [('Division',division), ('Department',department), ('Campus',campus)]:
                 if filter != 'Any':
-                        #if name=='Minor':
-                        #        course_names=engineering_minor_list[filter]
-                        #        print("course name",course_names)
-                        #        for n in course_names:
-                        #                main_table = main_table[main_table['Course']==n]
-                        print("name=",name)
                         main_table = main_table[main_table[name] == filter]
         tables = [main_table[0:n_return][['Course','Name','Division','Course Description','Department','Course Level']]]
         if year!=0:
@@ -214,6 +207,9 @@ def filter_results(search, year, division, department, campus, minor_search, n_r
                         tables.pop()
                         year-=1
         return tables
+
+
+# course page by course code
 @app.route('/course/<code>')
 def course(code):
 

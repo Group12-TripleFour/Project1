@@ -4,19 +4,23 @@ import 'bootstrap/dist/css/bootstrap.css';
 import logo from './img/logo.png'
 import { Navbar, Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch, Link, useLocation } from "react-router-dom";
-// import LogIn from "./LogIn.jsx";
 import CourseDescriptionPage from "./CourseDescription";
-// import Wishlist from './Wishlist';
-// import SignUp from './SignUp'
-import SearchResultDisplay from './ResultDisplay'
+
+
+import SearchResultDisplay, { global_array } from './ResultDisplay'
 import Form from "./Form";
 import FeedbackList from './feedbacks/FeedbackList';
-import NewFeedbackForm from './feedbacks/NewFeedbackForm';
-// import Comparison from './Comparison'
+import { useContext } from 'react';
+import FavoritesContext from './favorites-context'
+import classes from './Navbar.module.css'
+import FeedbackSubmitPage from './FeedbackSubmitPage';
 
+import NewFeedbackForm from './feedbacks/NewFeedbackForm';
+
+const a = global_array;
 const DUMMY_DATA = [
   {
-    coursename: 'ABC100',
+    coursename: 'ABC',
     workload: 'H',
     complexity: 'H',
     usefulness: 'H',
@@ -27,6 +31,12 @@ const DUMMY_DATA = [
     complexity:'L',
     usefulness: 'L',
   },
+  {
+    coursename: 'QWE200',
+    workload: 'L',
+    complexity:'L',
+    usefulness: 'L',
+  }
 ];
 
 function CourseDescription (props) {
@@ -40,30 +50,21 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
+function Count(){
+  const favoritesCtx = useContext(FavoritesContext);
+  console.log(favoritesCtx.totalFavorites);
+  return (
+    <span className={classes.badge}>{favoritesCtx.totalFavorites}</span> 
+  );
+
 function addFeedbackHandler(feedback){
   console.log(feedback);
 }
 
+
+
 export default class NavbarComp extends Component {
-
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
-  //     username: localStorage.getItem('username'),
-  //     login: false
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   if (localStorage.getItem('username') !== "") {
-  //     this.setState({username: localStorage.getItem('username')})
-  //   }
-  // }
-
-  // logOut = () => {
-  //   localStorage.setItem('username', "");
-  //   this.setState({username: ""})
-  // }
+  
 
   render() {
     return (
@@ -80,22 +81,16 @@ export default class NavbarComp extends Component {
             <Navbar.Toggle />
             <Navbar.Collapse>
               <Nav>
-                <Nav.Link as={Link} to="/about">
+                <Nav.Link className={classes.navpath} as={Link} to="/about">
                   About Us
                 </Nav.Link>
 
-                {/*<Nav.Link as={Link} to="/filter">
-                  Filter
-                </Nav.Link>*/}
 		<a class="navbar-brand-top" href="/filter"> Filter </a>
-
                 <Nav.Link as={Link} to="/review">
                   Review
                 </Nav.Link>
     <a class="navbar-brand-top" href="/Comparison"> Comparison </a>
-                {/*<Nav.Link as={Link} to="/comparison">
-                  Comparsion
-              </Nav.Link>*/}
+
 
               </Nav>
             </Navbar.Collapse>
@@ -124,12 +119,15 @@ We are looking for feedback to improve Education Pathways and make it more usefu
               {/* <SearchResultDisplay /> */}
             </Route>
 
-            {/*<Route path="/filter">
-              <div style={{ marginTop: "10%" }}>
-              <h2> Filter for courses </h2>
-              <Form />
-              </div>
-            </Route>*/}
+            <Route path="/review">
+            <div>
+              <FeedbackSubmitPage/>
+              <section>
+                <FeedbackList feedbacks={DUMMY_DATA} />
+              </section>
+            </div>
+            </Route>       
+
 
             <Route path="/review">
               <div style={{ marginTop: "3%" }}>           <section>
@@ -148,6 +146,9 @@ We are looking for feedback to improve Education Pathways and make it more usefu
             </Route>
             <Route path="/">
               <SearchResultDisplay />
+              <section>
+                <FeedbackList feedbacks={DUMMY_DATA}/>
+              </section>
             </Route>
 
           </Switch>

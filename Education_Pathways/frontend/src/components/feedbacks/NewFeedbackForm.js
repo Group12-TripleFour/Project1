@@ -40,7 +40,7 @@ function NewFeedbackForm(props) {
           <div className={classes.control}>
             <label className={classes.label}>Workload</label>
             <select 
-                value={currentComplexity} 
+                value={currentWorkload} 
                 onChange={(e) => setCurrentWorkload(e.target.value)}>
                     {options.map((value) => (
                     <option value={value} key={value}>

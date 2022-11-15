@@ -44,8 +44,11 @@ def serve(path):
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
+
+# add filter page implementation
 @app.route('/filter',methods=['GET','POST'])
 def filter_page():
+    # build search form by request
     search = model.CourseSearchForm(request.form)
     if request.method=='POST':
         return controller.filter_courses(search)
@@ -59,7 +62,6 @@ def comparison_page():
         # retrieve relevant course information if users have made selections
         return controller.compare_courses(search)
     return render_template('comparison.html',form=search)
-
 
 
 if __name__ == '__main__':
