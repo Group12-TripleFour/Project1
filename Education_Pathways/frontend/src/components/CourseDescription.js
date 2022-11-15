@@ -9,6 +9,27 @@ import empty_star from './img/star.png'
 import starred from './img/starred.png'
 import axios from "axios"
 
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, child, get  } from "firebase/database";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyA6YzFrRBpdaOCf8xX3lZHPpYRDtYMH_7g",
+  authDomain: "educationpathways-c37ec.firebaseapp.com",
+  databaseURL: "https://educationpathways-c37ec-default-rtdb.firebaseio.com",
+  projectId: "educationpathways-c37ec",
+  storageBucket: "educationpathways-c37ec.appspot.com",
+  messagingSenderId: "868723117829",
+  appId: "1:868723117829:web:0ffafe21bca572ee2b716c"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// Initialize Realtime Database and get a reference to the service
+const database = getDatabase(app);
+
+const dbRef = ref(getDatabase());
+
 let star = empty_star;
 
 class CourseDescriptionPage extends Component {
@@ -21,6 +42,9 @@ class CourseDescriptionPage extends Component {
       course_name: "",
       division: "Faculty of Applied Science and Engineering",
       department: "Department of Edward S. Rogers Sr. Dept. of Electrical & Computer Engineering",
+      workload: [],
+      complexity: [],
+      usefulness: [],
       graph : "",
       course_description: "",
       syllabus: "",
@@ -96,6 +120,16 @@ class CourseDescriptionPage extends Component {
 
     })
 
+    get(child(dbRef, `feedback/${this.props.match.params.code}`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        this.setState({workload: snapshot.val().workload})
+        this.setState({complexity: snapshot.val().complexity})
+        this.setState({usefulness: snapshot.val().usefulness})
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+
 
     console.log("new state: ", this.state)
   }
@@ -144,13 +178,17 @@ class CourseDescriptionPage extends Component {
               <h3>Course Feedback</h3>
             </Row>
             <Row>
-              <Col className="reviews">
+              <Col className="col-item">
                 <h4>Workload</h4>
-                <p>{this.state.prerequisites}</p>
+                <h3>{`${this.state.workload}/5`}</h3>
               </Col>
-              <Col className="reviews">
+              <Col className="col-item">
                 <h4>Complexity</h4>
-                <p>{this.state.corequisites}</p>
+                <h3>{`${this.state.complexity}/5`}</h3>
+              </Col>
+              <Col className="col-item">
+                <h4>Usefulness</h4>
+                <p>{`${this.state.usefulness}`}</p>
               </Col>
             </Row>
           </Row>

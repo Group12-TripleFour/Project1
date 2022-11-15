@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import NewFeedbackForm from './feedbacks/NewFeedbackForm';
 
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set  } from "firebase/database";
+import { getDatabase, ref, set, push  } from "firebase/database";
 //import { ref as sRef } from 'firebase/storage';
 
 // Firebase configuration
@@ -25,8 +25,7 @@ function FeedbackSubmitPage(){
     const history = useHistory();
 
     function addFeedbackHandler(feedback){
-      set(ref(database, 'feedback/' + feedback.coursename + '/'), {
-        course_code: feedback.coursename,
+      set((ref(database, 'feedback/' + feedback.coursename + '/')), {
         workload: feedback.workload,
         complexity: feedback.complexity,
         usefulness: feedback.usefulness
@@ -34,16 +33,6 @@ function FeedbackSubmitPage(){
       ).then(()=>{
         history.replace('/')
       });
-
-      // fetch('https://educationpathways-c37ec-default-rtdb.firebaseio.com/feedback.json',
-      // {
-      //   method:'POST',
-      //   body:JSON.stringify(feedback),
-      //   header:{'Content-Type': 'application/json'}
-      // }
-      // ).then(()=>{
-      //   history.replace('/')
-      // });
     }
 
     return (
