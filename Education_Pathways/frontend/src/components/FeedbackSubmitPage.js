@@ -36,7 +36,8 @@ function FeedbackSubmitPage(){
         usefulness: feedback.usefulness
       }
       ).then(()=>{
-        history.replace('/')
+        alert('You have been submitted successfully!')
+        history.replace('/review')
       });
     }
 

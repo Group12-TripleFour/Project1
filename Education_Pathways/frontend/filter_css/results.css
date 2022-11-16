@@ -1,5 +1,6 @@
 #results-page-table-container{
-	margin: 20px auto;
+	margin: 0px auto;
+	background-color: rgba(255,255,255,.8);
 }
 
 #results-page-table-container table{
@@ -26,4 +27,8 @@
 #results-page-table-container table:last-child{
 	border-right: 1px solid #00204E;
 }
-
+#result-title {
+	color: black;
+	background-color: rgba(255,255,255,.8);
+	margin: 0;
+}
