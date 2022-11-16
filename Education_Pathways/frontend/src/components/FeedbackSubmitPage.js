@@ -30,7 +30,7 @@ function FeedbackSubmitPage(){
     const history = useHistory();
 
     function addFeedbackHandler(feedback){
-      set((ref(database, 'feedback/' + feedback.coursename + '/')), {
+      set(push(ref(database, 'feedback/' + feedback.coursename + '/')), {
         workload: feedback.workload,
         complexity: feedback.complexity,
         usefulness: feedback.usefulness

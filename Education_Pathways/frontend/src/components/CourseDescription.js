@@ -45,6 +45,7 @@ class CourseDescriptionPage extends Component {
       workload: [],
       complexity: [],
       usefulness: [],
+      feedback: [], //{workload: [], complexity: [], usefulness: []}
       graph : "",
       course_description: "",
       syllabus: "",
@@ -120,16 +121,19 @@ class CourseDescriptionPage extends Component {
 
     })
 
+    this.setState({course_code: this.props.match.params.code})
+
     get(child(dbRef, `feedback/${this.props.match.params.code}`)).then((snapshot) => {
       if (snapshot.exists()) {
-        this.setState({workload: snapshot.val().workload})
-        this.setState({complexity: snapshot.val().complexity})
-        this.setState({usefulness: snapshot.val().usefulness})
+        snapshot.forEach(child =>{
+          this.setState({
+            feedback: this.state.feedback.concat([{workload: child.val().workload, complexity: child.val().complexity, usefulness: child.val().usefulness}])
+          })
+        })
       }
     }).catch((error) => {
       console.error(error);
     });
-
 
     console.log("new state: ", this.state)
   }
@@ -143,6 +147,7 @@ class CourseDescriptionPage extends Component {
   }
 
 	render() {
+
 		return(
 
       <div className="page-content">
@@ -178,18 +183,24 @@ class CourseDescriptionPage extends Component {
               <h3>Course Feedback</h3>
             </Row>
             <Row>
-              <Col className="col-item">
-                <h4>Workload</h4>
-                <h3>{`${this.state.workload}/5`}</h3>
-              </Col>
-              <Col className="col-item">
-                <h4>Complexity</h4>
-                <h3>{`${this.state.complexity}/5`}</h3>
-              </Col>
-              <Col className="col-item">
-                <h4>Usefulness</h4>
-                <p>{`${this.state.usefulness}`}</p>
-              </Col>
+              <table className="table table-striped table-bordered">
+                  <thead>
+                      <tr>
+                          <th style={{width: 120}}>Workload</th>
+                          <th style={{width: 125}}>Complexity</th>
+                          <th>Comments</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {this.state.feedback && this.state.feedback.map((user, index) =>
+                          <tr key={index}>
+                              <td>{user.workload}</td>
+                              <td>{user.complexity}</td>
+                              <td align="left">{user.usefulness}</td>
+                          </tr>
+                      )}
+                  </tbody>
+              </table>
             </Row>
           </Row>
         </Container>

@@ -53,6 +53,7 @@ class SearchResultDisplay extends Component{
     axios.get(`https://assignment-1-starter-template.herokuapp.com/searchc?input=${input}`)
       .then(res => {
         console.log(`it is ${res.status}`)
+        console.log(input)
         if (res.status === 200) {
 
           this.setState({results: []})
@@ -65,8 +66,17 @@ class SearchResultDisplay extends Component{
             for (let i = 0; i < len; i++) {
               get(child(dbRef, `feedback/${res.data[i].code}`)).then((snapshot) => {
                 if (snapshot.exists()) {
+                  let workload_cnt = 0
+                  let complexity_cnt = 0
+                  let total = 0
+                  snapshot.forEach(child =>{
+                    total++
+                    workload_cnt += parseInt(child.val().workload, 10)
+                    complexity_cnt += parseInt(child.val().complexity, 10)
+                    console.log(workload_cnt)
+                  })
                   result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}
-                    complexity={snapshot.val().complexity+"/5"} workload={snapshot.val().workload+"/5"}></Result>)
+                    complexity={(complexity_cnt/total).toFixed(1)+"/5"} workload={(workload_cnt/total).toFixed(1)+"/5"}></Result>)
                 }else{
                   result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}></Result>)
                 }
@@ -84,7 +94,7 @@ class SearchResultDisplay extends Component{
             get(child(dbRef, `feedback/${res.data.course.code}`)).then((snapshot) => {
               if (snapshot.exists()) {
                 result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}
-                  complexity={snapshot.val().complexity+"/5"} workload={snapshot.val().workload+"/5"}></Result>)
+                  complexity={(snapshot.val().complexity).toFixed(1)+"/5"} workload={(snapshot.val().workload).toFixed(1)+"/5"}></Result>)
               } else {
                 result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}></Result>)
               }
@@ -93,6 +103,7 @@ class SearchResultDisplay extends Component{
             });
 
             this.setState({results: result_temp})
+            console.log(result_temp)
           }
 
         } else if (res.status === 400) {
