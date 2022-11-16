@@ -9,6 +9,27 @@ import empty_star from './img/star.png'
 import starred from './img/starred.png'
 import axios from "axios"
 
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, child, get  } from "firebase/database";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyA6YzFrRBpdaOCf8xX3lZHPpYRDtYMH_7g",
+  authDomain: "educationpathways-c37ec.firebaseapp.com",
+  databaseURL: "https://educationpathways-c37ec-default-rtdb.firebaseio.com",
+  projectId: "educationpathways-c37ec",
+  storageBucket: "educationpathways-c37ec.appspot.com",
+  messagingSenderId: "868723117829",
+  appId: "1:868723117829:web:0ffafe21bca572ee2b716c"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// Initialize Realtime Database and get a reference to the service
+const database = getDatabase(app);
+
+const dbRef = ref(getDatabase());
+
 let star = empty_star;
 
 class CourseDescriptionPage extends Component {
@@ -17,10 +38,14 @@ class CourseDescriptionPage extends Component {
     super(props)
 
     this.state = {
-      course_code: "",
+      course_code: this.props.course_code,
       course_name: "",
       division: "Faculty of Applied Science and Engineering",
       department: "Department of Edward S. Rogers Sr. Dept. of Electrical & Computer Engineering",
+      workload: [],
+      complexity: [],
+      usefulness: [],
+      feedback: [],
       graph : "",
       course_description: "",
       syllabus: "",
@@ -96,6 +121,19 @@ class CourseDescriptionPage extends Component {
 
     })
 
+    this.setState({course_code: this.props.match.params.code})
+
+    get(child(dbRef, `feedback/${this.props.match.params.code}`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        snapshot.forEach(child =>{
+          this.setState({
+            feedback: this.state.feedback.concat([{workload: child.val().workload, complexity: child.val().complexity, usefulness: child.val().usefulness}])
+          })
+        })
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
 
     console.log("new state: ", this.state)
   }
@@ -109,6 +147,7 @@ class CourseDescriptionPage extends Component {
   }
 
 	render() {
+
 		return(
 
       <div className="page-content">
@@ -162,6 +201,62 @@ class CourseDescriptionPage extends Component {
                 <img style={{width: "70%", marginBottom: "3%"}} alt="" src={requisite_label}></img>
                 <img src={`data:image/jpeg;base64,${this.state.graph}`} alt="" ></img>
               </div>
+            </Row>
+          </Row>
+          <Row>
+            <h3>Course Feedback</h3>
+          </Row>
+          <Row className="col-item reviews">
+            <Row>
+              <h3>Course Feedback</h3>
+            </Row>
+            <Row>
+              <table className="table table-striped table-bordered">
+                  <thead>
+                      <tr>
+                          <th style={{width: 120}}>Workload</th>
+                          <th style={{width: 125}}>Complexity</th>
+                          <th>Comments</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {this.state.feedback && this.state.feedback.map((user, index) =>
+                          <tr key={index}>
+                              <td>{user.workload}</td>
+                              <td>{user.complexity}</td>
+                              <td align="left">{user.usefulness}</td>
+                          </tr>
+                      )}
+                  </tbody>
+              </table>
+            </Row>
+          </Row>
+          <Row>
+            <h3>Course Feedback</h3>
+          </Row>
+          <Row className="col-item reviews">
+            <Row>
+              <h3>Course Feedback</h3>
+            </Row>
+            <Row>
+              <table className="table table-striped table-bordered">
+                  <thead>
+                      <tr>
+                          <th style={{width: 120}}>Workload</th>
+                          <th style={{width: 125}}>Complexity</th>
+                          <th>Comments</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {this.state.feedback && this.state.feedback.map((user, index) =>
+                          <tr key={index}>
+                              <td>{user.workload}</td>
+                              <td>{user.complexity}</td>
+                              <td align="left">{user.usefulness}</td>
+                          </tr>
+                      )}
+                  </tbody>
+              </table>
             </Row>
           </Row>
         </Container>
