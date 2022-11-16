@@ -38,13 +38,10 @@ class CourseDescriptionPage extends Component {
     super(props)
 
     this.state = {
-      course_code: this.props.course_code,
+      course_code: "",
       course_name: "",
       division: "Faculty of Applied Science and Engineering",
       department: "Department of Edward S. Rogers Sr. Dept. of Electrical & Computer Engineering",
-      workload: [],
-      complexity: [],
-      usefulness: [],
       feedback: [],
       graph : "",
       course_description: "",
