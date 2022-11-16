@@ -180,6 +180,7 @@ def filter_results(search, year, division, department, campus, minor_search, n_r
         pos_vals = np.zeros((len(df),))
         idxs = [t[1] for t in sorted(list(zip(list(pos_vals),list(df.index))),key=lambda x:x[0],reverse=True)]
         tf = df.loc[idxs]
+        tf["Course"] = [l.replace("course","courseDetails") for l in tf["Course"]]
         requisite_vals = defaultdict(list)
         if minor_search != 'Any':
                 course_names=minor.engineering_minor_list[minor_search]
@@ -278,6 +279,7 @@ def compare_results(course1,course2):
     # convert lists to strings for dataframe columns 
     df_combined["Term"] = [','.join(map(str, l)) for l in df_combined["Term"]]
     df_combined["Pre-requisites"] = [','.join(map(str, l)) for l in df_combined["Pre-requisites"]]
+    df_combined["Course"] = [l.replace("course","courseDetails") for l in df_combined["Course"]]
     return df_combined
 
 # -------------------- Wishlist related --------------------
