@@ -3,3 +3,4 @@ venv
 *.DS_Store
 __pycache__
 Education_Pathways/frontend/node_modules
+Education_Pathways/tests
