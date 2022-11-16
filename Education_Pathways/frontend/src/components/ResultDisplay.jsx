@@ -72,18 +72,17 @@ class SearchResultDisplay extends Component{
                     total++
                     workload_cnt += parseInt(child.val().workload, 10)
                     complexity_cnt += parseInt(child.val().complexity, 10)
-                    console.log(workload_cnt)
                   })
                   result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}
                     complexity={(complexity_cnt/total).toFixed(1)+"/5"} workload={(workload_cnt/total).toFixed(1)+"/5"}></Result>)
                 }else{
                   result_temp.push(<Result course_code={res.data[i].code} course_name={res.data[i].name}></Result>)
                 }
+                this.setState({results: result_temp})
               }).catch((error) => {
                 console.error(error);
               });
             }
-            this.setState({results: result_temp})
           } else if (res.data.length === 0) {
             alert("Course not found")
           }else {
@@ -95,20 +94,20 @@ class SearchResultDisplay extends Component{
               if (snapshot.exists()) {
                 result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}
                   complexity={(snapshot.val().complexity).toFixed(1)+"/5"} workload={(snapshot.val().workload).toFixed(1)+"/5"}></Result>)
+                this.setState({results: result_temp})
               } else {
                 result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}></Result>)
+                this.setState({results: result_temp})
               }
             }).catch((error) => {
               console.error(error);
             });
-
-            this.setState({results: result_temp})
-            console.log(result_temp)
           }
 
         } else if (res.status === 400) {
           alert("System Error. Please refresh")
         }
+        console.log("end of function")
     })
   }
 
