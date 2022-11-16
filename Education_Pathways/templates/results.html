@@ -6,6 +6,18 @@
 <link rel="stylesheet" type="text/css" href="results.css">
 <link rel="stylesheet" type="text/css" href="common.css">
 
+<style>
+body {
+  background-image: url('uoft_background.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+h3 {
+  color:white;
+  font-size:bold;
+}
+</style>
+
 {% extends "bootstrap/base.html" %}
 
 {% block navbar %}
@@ -36,7 +48,7 @@
       <dl>
         {{ render_field(form.select) }}
         <p>
-          Restrict by one of: <br>{{ render_field(form.divisions) }} <br>or {{ render_field(form.departments) }} <br>or {{ render_field(form.campuses) }}
+          Restrict by one of: <br>{{ render_field(form.divisions) }} <br> {{ render_field(form.departments) }} <br> {{ render_field(form.campuses) }}
         </p> 
         <p>
         {{ render_field(form.search) }}
@@ -47,7 +59,7 @@
 	</dl>
       <p>{{render_field(form.top)}} <input type="submit" value="Search">
       </p></form>
-      <h3> Search Results </h3>
+      <h3 id="result-title"> Search Results </h3>
 <div id="results-page-table-container">
 {% for table in tables %}
             {{ table|safe }}
