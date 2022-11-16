@@ -30,7 +30,7 @@ set FLASK_ENV=development
 ```
 On MacOS, set the environment variables using
 ```sh
-export FLASK_APP=run.py
+export FLASK_APP=index.py
 export FLASK_ENV=development
 ```
 Then run the application
