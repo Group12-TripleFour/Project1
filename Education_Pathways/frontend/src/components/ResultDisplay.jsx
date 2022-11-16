@@ -26,19 +26,18 @@ const database = getDatabase(app);
 
 const dbRef = ref(getDatabase());
 
-
 class SearchResultDisplay extends Component{
 
   constructor() {
     super();
     this.state = {
       input: "",
-      results: [], 
+      results: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  
+
   handleChange(event) {
     this.setState({input: event.target.value});
   }
@@ -46,7 +45,6 @@ class SearchResultDisplay extends Component{
   handleSubmit(event) {
     event.preventDefault();
     this.getData(this.state.input)
-
   }
 
   getData = (input) => {
@@ -57,14 +55,15 @@ class SearchResultDisplay extends Component{
         if (res.status === 200) {
 
           this.setState({results: []})
-         
+          
           if (res.data.length > 0) {
             let len = res.data.length
             let result_temp = []
-          
             result_temp.push(<Label></Label>)
             for (let i = 0; i < len; i++) {
+              //reads the data from the database for each course code displayed 
               get(child(dbRef, `feedback/${res.data[i].code}`)).then((snapshot) => {
+                //calculates the average workload and complexity of the course based on reviews
                 if (snapshot.exists()) {
                   let workload_cnt = 0
                   let complexity_cnt = 0
@@ -91,6 +90,7 @@ class SearchResultDisplay extends Component{
             let result_temp = []
             result_temp.push(<Label></Label>)
 
+            //for if only one course is displayed
             get(child(dbRef, `feedback/${res.data.course.code}`)).then((snapshot) => {
               if (snapshot.exists()) {
                 result_temp.push(<Result course_code={res.data.course.code} course_name={res.data.course.name}
@@ -112,14 +112,13 @@ class SearchResultDisplay extends Component{
     })
   }
 
-
   render(){
     return (
       <div className="SearchQuery">
         <div style={{ marginTop: "10%" }}>
             <h1> Education Pathways</h1>
             <br></br>
-          
+
             <form onSubmit={this.handleSubmit} className={"search"}>
                 <input placeholder={"Search for course code, course name, keyword ..."} className={"text-input"} type="text" value={this.state.input} onChange={this.handleChange} />
                 <input type="submit" value="Search" className={"submit-button"}/>

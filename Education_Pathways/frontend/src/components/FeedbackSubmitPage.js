@@ -8,7 +8,6 @@ import NewFeedbackForm from './feedbacks/NewFeedbackForm';
 
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, push  } from "firebase/database";
-//import { ref as sRef } from 'firebase/storage';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -30,6 +29,7 @@ function FeedbackSubmitPage(){
     const history = useHistory();
 
     function addFeedbackHandler(feedback){
+      //adds the review to the database
       set(push(ref(database, 'feedback/' + feedback.coursename + '/')), {
         workload: feedback.workload,
         complexity: feedback.complexity,
