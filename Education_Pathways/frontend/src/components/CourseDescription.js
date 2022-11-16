@@ -183,18 +183,24 @@ class CourseDescriptionPage extends Component {
               <h3>Course Feedback</h3>
             </Row>
             <Row>
-              <Col className="col-item">
-                <h4>Workload</h4>
-                <h3>{`${this.state.workload}/5`}</h3>
-              </Col>
-              <Col className="col-item">
-                <h4>Complexity</h4>
-                <h3>{`${this.state.complexity}/5`}</h3>
-              </Col>
-              <Col className="col-item">
-                <h4>Usefulness</h4>
-                <p>{`${this.state.usefulness}`}</p>
-              </Col>
+              <table className="table table-striped table-bordered">
+                  <thead>
+                      <tr>
+                          <th style={{width: 120}}>Workload</th>
+                          <th style={{width: 125}}>Complexity</th>
+                          <th>Comments</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {this.state.feedback && this.state.feedback.map((user, index) =>
+                          <tr key={index}>
+                              <td>{user.workload}</td>
+                              <td>{user.complexity}</td>
+                              <td align="left">{user.usefulness}</td>
+                          </tr>
+                      )}
+                  </tbody>
+              </table>
             </Row>
           </Row>
           <Row>
