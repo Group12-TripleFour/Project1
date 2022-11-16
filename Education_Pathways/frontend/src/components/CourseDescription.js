@@ -38,13 +38,10 @@ class CourseDescriptionPage extends Component {
     super(props)
 
     this.state = {
-      course_code: this.props.course_code,
+      course_code: "",
       course_name: "",
       division: "Faculty of Applied Science and Engineering",
       department: "Department of Edward S. Rogers Sr. Dept. of Electrical & Computer Engineering",
-      workload: [],
-      complexity: [],
-      usefulness: [],
       feedback: [],
       graph : "",
       course_description: "",
@@ -67,7 +64,6 @@ class CourseDescriptionPage extends Component {
       code: this.props.course_code
     })
       .then(res => {
-        console.log(res.data)
         this.setState({course_code: res.data.course.code})
         this.setState({course_name: res.data.course.name})
         this.setState({course_description : res.data.course.description})
@@ -202,37 +198,6 @@ class CourseDescriptionPage extends Component {
                 <img src={`data:image/jpeg;base64,${this.state.graph}`} alt="" ></img>
               </div>
             </Row>
-          </Row>
-          <Row>
-            <h3>Course Feedback</h3>
-          </Row>
-          <Row className="col-item reviews">
-            <Row>
-              <h3>Course Feedback</h3>
-            </Row>
-            <Row>
-              <table className="table table-striped table-bordered">
-                  <thead>
-                      <tr>
-                          <th style={{width: 120}}>Workload</th>
-                          <th style={{width: 125}}>Complexity</th>
-                          <th>Comments</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {this.state.feedback && this.state.feedback.map((user, index) =>
-                          <tr key={index}>
-                              <td>{user.workload}</td>
-                              <td>{user.complexity}</td>
-                              <td align="left">{user.usefulness}</td>
-                          </tr>
-                      )}
-                  </tbody>
-              </table>
-            </Row>
-          </Row>
-          <Row>
-            <h3>Course Feedback</h3>
           </Row>
           <Row className="col-item reviews">
             <Row>
