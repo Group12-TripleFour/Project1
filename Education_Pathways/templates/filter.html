@@ -8,6 +8,13 @@
   <meta charset="UTF-8">
     <title>Education Pathways</title>
 </head>-->
+<style>
+body {
+  background-image: url('uoft_background.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+</style>
 {% extends "bootstrap/base.html" %}
 
 {% block navbar %}
@@ -42,6 +49,7 @@
 </div>
 
 {% from "_formhelpers.html" import render_field %}
+<div>
 <form method="post" class="common-page-form">
   <dl>
     {{ render_field(form.select) }}
