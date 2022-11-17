@@ -14,7 +14,7 @@
 }
 #root{
 	background-image: url("../img/uoft_background.jpg");
-	background-size: 100% 100%;
+	background-size: cover;
 	background-repeat: no-repeat;
 }
 
